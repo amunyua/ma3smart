@@ -9,9 +9,11 @@
                 <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
                 <select name="role" class="form-control" id="role">
                     <option value="">Choose Role</option>
-                    <option value="driver">Driver</option>
-                    <option value="conductor">conductor</option>
-                    <option value="owner">Ma3 Owner</option>
+                    @if(count($roles))
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                            @endforeach
+                        @endif
                 </select>
             </div>
         </div>

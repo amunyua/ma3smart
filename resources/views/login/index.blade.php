@@ -1,6 +1,6 @@
 @extends('layouts.login')
 @section('title', 'Login')
-@section('system_name', 'BODA SQUARED')
+@section('system_name', 'Ma3Smart')
 
 @section('content')
 <div class="hero">
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <img src="{{ URL::asset('img/demo/bike.jpg') }}" class="pull-right display-image" alt="" style="width:350px; height: 200px; margin-top: 50px;">
+    <img src="{{ URL::asset('img/demo/maxresdefault.jpg') }}" class="pull-right display-image" alt="" style="width:350px; height: 200px; margin-top: 50px;">
 </div>
 
 <div class="row">

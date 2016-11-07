@@ -12,6 +12,7 @@ use App\Stream;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -26,7 +27,16 @@ class MasterfileController extends Controller
     }
 
     public function index(){
-        $roles = Role::all();
+        $user_role = Role::where('role_code','SYS_ADMIN')->first();
+        $role_id =$user_role->id;
+        if($this->user()->user_role != $role_id) {
+            $roles = Role::where([
+                ['role_code', '<>', 'SYS_ADMIN'],
+                ['role_code', '<>', 'SACCO']
+            ])->get();
+        }else{
+            $roles = Role::where('role_code', '<>', 'SYS_ADMIN')->get();
+        }
         $main_ctype = 1;
         $counties =1;
 //        $streams = Stream::where('stream_status', 1)->get();

@@ -16,6 +16,7 @@
         <tr>
             <th>ID</th>
             <th>Role Name</th>
+            <th>Role Code</th>
             <th>Status</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -27,7 +28,8 @@
                 <tr>
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->role_name }}</td>
-                    <td><?php echo ($role->status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Blocked</span>' ?></td>
+                    <td>{{ $role->role_name }}</td>
+                    <td><?php echo ($role->role_status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Blocked</span>' ?></td>
                     <td></td>
                     <td> <a href="#delete-user-role" class="btn btn-danger btn-xs del_role" data-toggle="modal" del-id="{{ $role->id }}">Delete </a> </td>
                 </tr>
@@ -59,7 +61,18 @@
                                     <label class="label col col-2">Role Name</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" name="role_name">
+                                            <input type="text" value="{{ old('role_name') }}" autocomplete="off" name="role_name" required>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Code</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" autocomplete="off" value="{{ old('role_code') }}" name="role_code" required>
                                         </label>
                                     </div>
                                 </div>

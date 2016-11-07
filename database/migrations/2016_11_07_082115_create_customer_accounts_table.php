@@ -15,6 +15,14 @@ class CreateCustomerAccountsTable extends Migration
     {
         Schema::create('customer_accounts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('vehicle_id')->unsigned()->index();
+            $table->foreign('vehicle_id')
+                ->references('id')
+                ->on('buses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->double('opening_balance');
+            $table->double('running_ballance');
             $table->timestamps();
         });
     }

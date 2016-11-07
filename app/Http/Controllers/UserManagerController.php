@@ -7,6 +7,7 @@ use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
+use App\Role;
 
 class UserManagerController extends Controller
 {
@@ -15,7 +16,7 @@ class UserManagerController extends Controller
         $this->middleware('auth');
     }
     public function getIndex(){
-        $roles = UserRole::all();
+        $roles = Role::all();
         return view('user_manager.user_roles')->withRoles($roles);
     }
 
@@ -23,13 +24,15 @@ class UserManagerController extends Controller
 //        var_dump($_POST);
 
         $this->validate($request,array(
-            'role_name'=>'required|min:3|unique:user_roles,role_name',
+            'role_name'=>'required|min:3|unique:roles,role_name',
+            'role_code'=>'required',
             'status'=>'required'
         ));
-        $this->logAction('add_user_role');
-        $user_role = new UserRole();
-        $user_role->role_name = $request->role_name;
-        $user_role->status = $request->status;
+//        $this->logAction('add_user_role');
+        $user_role = new Role();
+        $user_role->role_name = ucfirst($request->role_name);
+        $user_role->role_code = strtoupper($request->role_code);
+        $user_role->role_status = $request->status;
 
         $user_role->save();
         Session::flash('success','User Role ('.$request->role_name.') has been added');
@@ -38,7 +41,7 @@ class UserManagerController extends Controller
 
     public function destroyRole($id){
         if(UserRole::destroy($id)){
-            $this->logAction('Delete_user_role');
+//            $this->logAction('Delete_user_role');
             Session::flash('success','Role has been deleted');
             return redirect('user_roles');
         }

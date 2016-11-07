@@ -10,9 +10,11 @@ return array(
     'AddFaiconColumn' => $baseDir . '/database/migrations/2016_11_5_093918_add_faicon_column.php',
     'AddFkToUserstable' => $baseDir . '/database/migrations/2016_11_06_075012_add_fk_to_userstable.php',
     'AddStatusColumnOnMasterfiles' => $baseDir . '/database/migrations/2016_11_06_181608_addStatusColumn_on_masterfiles.php',
+    'AddStatusColumnOnUserroles' => $baseDir . '/database/migrations/2016_11_07_104941_addStatus_column_on_userroles.php',
     'AddUserRoleColumnInUsersT' => $baseDir . '/database/migrations/2016_11_06_164649_addUserRoleColumnInUsersT.php',
     'Addcolumnstoexpenses' => $baseDir . '/database/migrations/2016_11_03_185419_addcolumnstoexpenses.php',
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
+    'CreateAllMasterfileView' => $baseDir . '/database/migrations/2016_11_07_122709_create_all_masterfile_view.php',
     'CreateBusesTable' => $baseDir . '/database/migrations/2016_11_02_183215_create_buses_table.php',
     'CreateContactsTable' => $baseDir . '/database/migrations/2016_11_5_114536_create_contacts_table.php',
     'CreateCustomerAccountsTable' => $baseDir . '/database/migrations/2016_11_07_082115_create_customer_accounts_table.php',
@@ -593,4 +595,5 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UserSeeder' => $baseDir . '/database/seeds/UserSeeder.php',
+    'UsersAddRoleNameToUsers' => $baseDir . '/database/migrations/2016_11_07_113321_users___add_role_name_to_users.php',
 );

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Masterfile;
 use Illuminate\Support\Facades\DB;
+use App\Role;
 
 class UserSeeder extends Seeder
 {
@@ -13,13 +14,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $admin_mf = Masterfile::where('surname', 'Admin')->first();
-        DB::table('users')->delete();
-        $admin = new \App\User();
-        $admin->name = 'Admin';
-        $admin->email = 'admin@admin.com';
-        $admin->mf_id = $admin_mf->id;
-        $admin->password = bcrypt(123456);
-        $admin->save();
+        DB::transaction(function (){
+            $admin_mf = Masterfile::where('surname', 'Admin')->first();
+            $role = Role::where('role_code','SYS_ADMIN')->first();
+            DB::table('users')->delete();
+            $admin = new \App\User();
+            $admin->name = 'Admin';
+            $admin->email = 'admin@admin.com';
+            $admin->user_role = $role->id;
+            $admin->mf_id = $admin_mf->id;
+            $admin->password = bcrypt(123456);
+            $admin->save();
+        });
     }
 }
