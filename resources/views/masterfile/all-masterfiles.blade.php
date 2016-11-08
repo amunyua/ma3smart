@@ -32,6 +32,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>ID no</th>
+            <th>Business Role</th>
             <th>Phone Number</th>
             <th>Email Address</th>
             <th>Physical Addres</th>

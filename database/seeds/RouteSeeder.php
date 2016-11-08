@@ -53,6 +53,37 @@ class RouteSeeder extends Seeder
             $mf->save();
             $mf->roles()->attach($admin);
 
+            #### Suppliers
+            $supplier = new Route();
+            $supplier->route_name = 'Suppliers';
+            $supplier->save();
+            $supp_id = $supplier->id;
+
+            // manage suppliers
+            $supplier = new Route();
+            $supplier->route_name = 'Manage Suppliers';
+            $supplier->url = 'suppliers';
+            $supplier->parent_route = $supp_id;
+            $supplier->save();
+            $supplier->roles()->attach($admin);
+
+            // manage supplier items
+            $supplier = new Route();
+            $supplier->route_name = 'Manage Supplier Items';
+            $supplier->url = 'supplier-items';
+            $supplier->parent_route = $supp_id;
+            $supplier->save();
+            $supplier->roles()->attach($admin);
+
+            // manage Invoices
+            $supplier = new Route();
+            $supplier->route_name = 'Manage Invoices';
+            $supplier->url = 'invoices';
+            $supplier->parent_route = $supp_id;
+            $supplier->save();
+            $supplier->roles()->attach($admin);
+
+
 
             #### Configurations
             $system_configurations = new Route();

@@ -39,6 +39,9 @@ class CreateAllMasterfileView extends Migration
      */
     public function down()
     {
-        //
+        DB::statement(
+            "DROP VIEW all_masterfiles
+           "
+        );
     }
 }

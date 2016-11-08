@@ -1,11 +1,11 @@
 @extends('layouts.dt')
-@section('title', 'All buses')
-@section('widget-title', 'Manage Buses')
-@section('widget-desc', 'All Buses')
+@section('title', 'Suppliers')
+@section('widget-title', 'Manage Suppliers')
+@section('widget-desc', 'All Suppliers')
 
 @section('button')
     <button type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-user-role">
-        <i class="fa fa-plus"></i> Add Bus
+        <i class="fa fa-plus"></i> Add Supplier
     </button>
 @endsection
 
@@ -15,30 +15,36 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Number plate</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Supplier Role</th>
             <th>Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Phone Number</th>
+            <th>City</th>
+            <th>Physical Addres</th>
         </tr>
         </thead>
         <tbody>
-        @if(count($buses))
-        @foreach($buses as $role)
-        <tr>
-        <td>{{ $role->id }}</td>
-        <td>{{ $role->number_plate }}</td>
-        <td><?php echo ($role->status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Blocked</span>' ?></td>
-        <td></td>
-        <td> <a href="#delete-user-role" class="btn btn-danger btn-xs del_role" data-toggle="modal" del-id="{{ $role->id }}">Delete </a> </td>
-        </tr>
-        @endforeach
-        @endif
+            @if(count($suppliers))
+                @foreach($suppliers as $supplier)
+                    <tr>
+                        <td>{{ $supplier->id }}</td>
+                        <td>{{ $supplier->supplier_name }}</td>
+                        <td>{{ $supplier->code }}</td>
+                        <td>{{ $supplier->role }}</td>
+                        <td>{{ $supplier->status }}</td>
+                        <td>{{ '0'.$supplier->phone_number }}</td>
+                        <td>{{ $supplier->city }}</td>
+                        <td>{{ $supplier->physical_location }}</td>
+                    </tr>
+                    @endforeach
+                @endif
         </tbody>
     </table>
 @endsection
 
 @section('modals')
-    <div class="modal fade" id="add-user-role" role="dialog">
+    <div class="modal fade" id="add-user-role" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,20 +52,20 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Add Bus
+                        Add An Expense
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="add-menu-form" class="smart-form" action="{{ url('add-bus') }}" method="post">
+                    <form id="add-menu-form" class="smart-form" action="{{ url('store-supplier') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2">Number Plate</label>
+                                    <label class="label col col-2">Supplier Name</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" name="number_plate" autocomplete="off">
+                                            <input type="text" required name="supplier_name" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -67,16 +73,11 @@
 
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2">Owner</label>
+                                    <label class="label col col-2">Supplier Role</label>
                                     <div class="col col-10">
                                         <label class="input">
-                                            <select name="status" class="form-control">
-                                                <option value="1">Select Owner</option>
-                                                        {{--@if(count($owners))--}}
-                                                            {{--@foreach($owners as $owner)--}}
-                                                                {{--<option value="{{ $owner->id }}">{{ $owner->firstname }}</option>--}}
-                                                                {{--@endforeach--}}
-                                                            {{--@endif--}}
+                                            <select name="role" required class="form-control">
+                                                <option value="Garage">Garage</option>
                                             </select>
                                         </label>
                                     </div>
@@ -85,17 +86,60 @@
 
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2">Status</label>
+                                    <label class="label col col-2">Code</label>
                                     <div class="col col-10">
-                                        <label class="input">
-                                            <select name="status" class="form-control">
-                                                <option value="1">Active</option>
-                                                <option value="0">Inactive</option>
-                                            </select>
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="code" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
                             </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Registration Number</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text"  name="registration_number" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Phone Number</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="phone_number" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">City</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="city" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Physical Location</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="physical_location" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
 
 
                         </fieldset>

@@ -1,11 +1,11 @@
 @extends('layouts.dt')
-@section('title', 'All buses')
-@section('widget-title', 'Manage Buses')
-@section('widget-desc', 'All Buses')
+@section('title', 'Suppliers Items')
+@section('widget-title', 'Manage Supplier Items')
+@section('widget-desc', 'All Supplier items')
 
 @section('button')
     <button type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-user-role">
-        <i class="fa fa-plus"></i> Add Bus
+        <i class="fa fa-plus"></i> Add item
     </button>
 @endsection
 
@@ -15,30 +15,32 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Number plate</th>
-            <th>Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Supplier </th>
+            <th>Amount</th>
+            <th>status</th>
         </tr>
         </thead>
         <tbody>
-        @if(count($buses))
-        @foreach($buses as $role)
-        <tr>
-        <td>{{ $role->id }}</td>
-        <td>{{ $role->number_plate }}</td>
-        <td><?php echo ($role->status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Blocked</span>' ?></td>
-        <td></td>
-        <td> <a href="#delete-user-role" class="btn btn-danger btn-xs del_role" data-toggle="modal" del-id="{{ $role->id }}">Delete </a> </td>
-        </tr>
-        @endforeach
-        @endif
+            @if(count($supplier_items))
+                @foreach($supplier_items as $supplier_item)
+                    <tr>
+                        <td>{{ $supplier_item->id }}</td>
+                        <td>{{ $supplier_item->item_name }}</td>
+                        <td>{{ $supplier_item->item_code }}</td>
+                        <td>{{ $supplier_item->supplier_id }}</td>
+                        <td>{{ $supplier_item->amount }}</td>
+                        <td>{{ ($supplier_item->status == 1)? 'Active':'Inactive' }}</td>
+                    </tr>
+                    @endforeach
+                @endif
         </tbody>
     </table>
 @endsection
 
 @section('modals')
-    <div class="modal fade" id="add-user-role" role="dialog">
+    <div class="modal fade" id="add-user-role" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,20 +48,50 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Add Bus
+                        Add Item
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="add-menu-form" class="smart-form" action="{{ url('add-bus') }}" method="post">
+                    <form id="add-menu-form" class="smart-form" action="{{ url('store-supplier-item') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2">Number Plate</label>
+                                    <label class="label col col-2">Supplier</label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="supplier_id" required class="form-control">
+                                                <option value="">select supplier</option>
+                                                @if(count($suppliers))
+                                                    @foreach($suppliers as $supplier)
+                                                        <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Item Name</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" name="number_plate" autocomplete="off">
+                                            <input type="text" required value="{{ old('item_name') }}" name="item_name" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Code</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required value="{{ old('item_code') }}"name="item_code" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -67,37 +99,14 @@
 
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2">Owner</label>
+                                    <label class="label col col-2">Amount</label>
                                     <div class="col col-10">
-                                        <label class="input">
-                                            <select name="status" class="form-control">
-                                                <option value="1">Select Owner</option>
-                                                        {{--@if(count($owners))--}}
-                                                            {{--@foreach($owners as $owner)--}}
-                                                                {{--<option value="{{ $owner->id }}">{{ $owner->firstname }}</option>--}}
-                                                                {{--@endforeach--}}
-                                                            {{--@endif--}}
-                                            </select>
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" value="{{ old('amount') }}"  name="amount" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
                             </section>
-
-                            <section>
-                                <div class="row">
-                                    <label class="label col col-2">Status</label>
-                                    <div class="col col-10">
-                                        <label class="input">
-                                            <select name="status" class="form-control">
-                                                <option value="1">Active</option>
-                                                <option value="0">Inactive</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                </div>
-                            </section>
-
-
                         </fieldset>
 
                         <footer>

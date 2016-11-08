@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bus;
+use App\Masterfile;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,7 +20,11 @@ class BusesController extends Controller
 
     public function getBuses(){
         $buses = Bus::all();
-        return view('configurations.buses')->withBuses($buses);
+        $owners = Masterfile::where('user_role','Ma3 owner')->get();
+        return view('configurations.buses',array(
+            'buses'=>$buses,
+            'owner'=>$owners
+        ));
     }
 
     public function storeBus(Request $request){

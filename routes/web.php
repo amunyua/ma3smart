@@ -87,3 +87,12 @@ Route::get('/new-mf', 'MasterfileController@index');
 Route::post('/store-masterfile','MasterfileController@storeMasterfile');
 Route::get('/all-masterfiles','MasterfileController@getAllMasterfiles');
 Route::get('/load-masterfiles','MasterfileController@loadMasterFiles');
+
+#### Suppliers
+Route::get('/suppliers','SupplierController@getSuppliers');
+Route::post('/store-supplier','SupplierController@storeSupplier');
+Route::get('/supplier-items','SupplierController@getSupplierItems');
+Route::post('/store-supplier-item','SupplierController@storeSupplierItem');
+Route::get('/invoices','SupplierController@getInvoices');
+Route::get('/load-invoice-fields/{id}','SupplierController@loadInvoiceFields');
+Route::post('/raise-invoice','SupplierController@createInvoice');

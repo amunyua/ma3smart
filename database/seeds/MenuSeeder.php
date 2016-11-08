@@ -55,11 +55,44 @@ class MenuSeeder extends Seeder
             $mf->sequence = 2;
             $mf->save();
 
+            #### Suppliers
+            $supplier_route = Route::where('route_name','Suppliers')->first();
+            $supplier = new Menu();
+            $supplier->route_id = $supplier_route->id;
+            $supplier->sequence = 3;
+            $supplier->save();
+            $supplier_r = $supplier->id;
+
+            //manage suppliers
+            $s_id = Route::where('route_name','Manage Suppliers')->first();
+            $m_supp = new Menu();
+            $m_supp->route_id = $s_id->id;
+            $m_supp->parent_menu = $supplier_r;
+            $m_supp->sequence = 1;
+            $m_supp->save();
+
+            // manage supplier items
+            $s_id = Route::where('route_name','Manage Supplier Items')->first();
+            $m_supp = new Menu();
+            $m_supp->route_id = $s_id->id;
+            $m_supp->parent_menu = $supplier_r;
+            $m_supp->sequence = 2;
+            $m_supp->save();
+
+            // Manage Invoices
+            $s_id = Route::where('route_name','Manage Invoices')->first();
+            $m_supp = new Menu();
+            $m_supp->route_id = $s_id->id;
+            $m_supp->parent_menu = $supplier_r;
+            $m_supp->sequence = 3;
+            $m_supp->save();
+
+
             #### configurations
             $configurations_route = Route::where('route_name', 'System Configurations')->first();
             $conf = new Menu();
             $conf->route_id = $configurations_route->id;
-            $conf->sequence = 3;
+            $conf->sequence = 4;
             $conf->save();
             $configurations_id = $conf->id;
 
@@ -92,7 +125,7 @@ class MenuSeeder extends Seeder
             $report_route = Route::where('route_name', 'Reports')->first();
             $report = new Menu();
             $report->route_id = $report_route->id;
-            $report->sequence = 3;
+            $report->sequence = 5;
             $report->save();
             $report_id = $report->id;
 

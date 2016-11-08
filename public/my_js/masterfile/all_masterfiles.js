@@ -8,7 +8,7 @@ var DT = $('#masterfiles').DataTable({
         { data: 'id', name: 'id'},
         { data: 'username', name: 'username'},
         { data: 'id_no', name: 'id_no'},
-        // { data: 'user_role', name: 'user_role'},
+        { data: 'user_role', name: 'user_role'},
         { data: 'phone_number', name: 'phone_number'},
         { data: 'email', name: 'email'},
         { data: 'physical_address', name: 'physical_address'},
@@ -22,3 +22,13 @@ var DT = $('#masterfiles').DataTable({
 $('#refresh-dt').click(function(){
     DT.ajax.reload();
 });
+
+var hide = function (data) {
+    if (data != ''){
+        if($this == '') {
+            $('.person').hide();
+        }else{
+            $('.person').show();
+        }
+    }
+}

@@ -64,7 +64,7 @@ class MasterfileController extends Controller
         $this->validate($request, $rules);
 
         DB::transaction(function(){
-            $role = Role::where('role_code', Input::get('role_code'))->first();
+            $role = Role::where('role_code', Input::get('role'))->first();
 
             // create registration
                 $reg = new Masterfile();
@@ -73,7 +73,7 @@ class MasterfileController extends Controller
                 $reg->middlename = Input::get('middlename');
                 $reg->id_no = Input::get('id_no');
                 $reg->user_role = Input::get('role');
-                $reg->b_role = 'Owner';
+                $reg->b_role = Input::get('role');
                 $reg->save();
                 $reg_id = $reg->id;
 
@@ -85,22 +85,22 @@ class MasterfileController extends Controller
                 $contact->masterfile_id =  $reg_id;
                 $contact->phone_number =  Input::get('phone_number');
                 $contact->email =  Input::get('email');
-                $contact->mobile_no =  Input::get('mobile_no');
+//                $contact->mobile_no =  Input::get('mobile_no');
                 $contact->save();
-            if(Input::get('role')== 'owner') {
-                // create user login account
-                $password = bcrypt(123456);
-                $login = new User();
-                $login->masterfile_id = $reg_id;
-                $login->email =Input::get('email');
-                $login->phone_no = Input::get('phone_no');
-                $login->password = $password;
-                $login->user_role = 1;
-                $login->save();
-            }
+//            if(Input::get('role')== 'owner') {
+//                // create user login account
+//                $password = bcrypt(123456);
+//                $login = new User();
+//                $login->masterfile_id = $reg_id;
+//                $login->email =Input::get('email');
+//                $login->phone_no = Input::get('phone_no');
+//                $login->password = $password;
+//                $login->user_role = 1;
+//                $login->save();
+//            }
             Session::flash('success','The masterFile has been created');
         });
-//        return redirect('all-masterfiles');
+        return redirect('all-masterfiles');
     }
 
     public function client(Request $request){
@@ -150,7 +150,7 @@ class MasterfileController extends Controller
                 'phone_no' => Input::get('phone_no'),
                 'password' => $password
             ));
-            var_dump($login);exit;
+//            var_dump($login);exit;
             $login->save();
         });
     }
