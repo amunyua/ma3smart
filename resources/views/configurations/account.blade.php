@@ -95,10 +95,27 @@
                                     <div class="col col-10">
                                         <label class="input">
                                             <select name="driver_id" required class="form-control">
+                                                <option value="">Please Select a driver</option>
                                                 @if(count($drivers)){
-                                                @foreach($drivers as $driver)
-                                                    <option value="">Please Select a driver</option>
+                                            @foreach($drivers as $driver)
                                                     <option value="{{ $driver->id }}">{{ $driver->firstname.' '.$driver->middlename }}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2"><strong>Conductor</strong></label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="conductor" required class="form-control">
+                                                <option value="">Please Select conductor</option>
+                                                @if(count($conductors)){
+                                                @foreach($conductors as $conductor)
+                                                    <option value="{{ $conductor->id }}">{{ $conductor->firstname.' '.$conductor->sirname }}</option>
                                                 @endforeach
                                                 @endif
                                             </select>

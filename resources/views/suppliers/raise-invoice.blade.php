@@ -19,17 +19,27 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Supplier Role</th>
-            <th>Status</th>
-            <th>Phone Number</th>
-            <th>City</th>
-            <th>Physical Addres</th>
+            <th>Supplier</th>
+            <th>Registration Number</th>
+            <th>Invoice Date</th>
+            <th>View Invoice</th>
         </tr>
         </thead>
         <tbody>
-
+            @if(count($transactions))
+                @foreach($transactions as $transaction)
+                    <?php $supplier = \App\Supplier::find($transaction->supplier_id);
+                            $vehicle = \App\Bus::find($transaction->vehicle_id);
+                    ?>
+                    <tr>
+                        <td>{{ $transaction->id }}</td>
+                        <td>{{ $supplier->supplier_name }}</td>
+                        <td>{{ $vehicle->number_plate }}</td>
+                        <td>{{ $transaction->transaction_date }}</td>
+                        <td><?php echo '<a class="btn btn-small btn-success">View </a>'?></td>
+                    </tr>
+                    @endforeach
+                @endif
         </tbody>
     </table>
 @endsection
@@ -67,7 +77,7 @@
                                     <div class="col col-10">
                                         <label class="input">
                                             <select name="supplier_id" required id="supplier" class="form-control">
-                                                <option value=" ">Select supplier</option>
+                                                <option value="">Select supplier</option>
                                                 @if(count($suppliers))
                                                     @foreach($suppliers as $supplier)
                                                         <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
@@ -84,7 +94,7 @@
                                     <div class="col col-10">
                                         <label class="input">
                                             <select name="vehicle_id" required  class="form-control">
-                                                <option value=" ">Select vehicle</option>
+                                                <option value="">Select vehicle</option>
                                                 @if(count($vehicles))
                                                     @foreach($vehicles as $vehicle)
                                                         <option value="{{ $vehicle->id }}">{{ $vehicle->number_plate }}</option>

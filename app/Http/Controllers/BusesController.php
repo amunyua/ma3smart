@@ -23,7 +23,7 @@ class BusesController extends Controller
         $owners = Masterfile::where('user_role','Ma3 owner')->get();
         return view('configurations.buses',array(
             'buses'=>$buses,
-            'owner'=>$owners
+            'owners'=>$owners
         ));
     }
 
@@ -35,7 +35,10 @@ class BusesController extends Controller
 //        $this->logAction('add_user_role');
         $bus = new Bus();
         $bus->number_plate = strtoupper($request->number_plate);
+        $bus->owner_id = $request->owner_id;
         $bus->status = $request->status;
+        $bus->alias_name = $request->alias_name;
+
 
         $bus->save();
         Session::flash('success','Bus ('.strtoupper($request->number_plate).') has been added');

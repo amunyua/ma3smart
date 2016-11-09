@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Bus;
+use App\InvoiceTransactionDetails;
 use App\InvoiceTransactions;
 use App\Supplier;
 use App\SupplierEntity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 
@@ -76,11 +78,13 @@ class SupplierController extends Controller
     }
 
     public function getInvoices(){
+        $transactions = InvoiceTransactions::all();
         $vehicles = Bus::all();
         $suppliers = Supplier::where('status',true)->get();
         return view('suppliers.raise-invoice',array(
             'suppliers'=>$suppliers,
-            'vehicles'=>$vehicles
+            'vehicles'=>$vehicles,
+            'transactions'=>$transactions
         ));
     }
 
@@ -99,11 +103,16 @@ class SupplierController extends Controller
             'invoice_date'=>'required',
             'vehicle_id'=>'required'
         ));
-        $supplier_items = array();
+
         DB::transaction(function () {
             $invoice_transaction = new InvoiceTransactions();
-
-            print_r($supplier_items);
+            $invoice_transaction->vehicle_id = Input::get('vehicle_id');
+            $invoice_transaction->transaction_date = Input::get('invoice_date');
+            $invoice_transaction->supplier_id = Input::get('supplier_id');
+            $invoice_transaction->save();
+            $transction_id = $invoice_transaction->id;
+            $supplier_items = array();
+//            print_r($supplier_items);
             foreach ($_POST as $key => $post) {
                 if (is_numeric($key)) {
                     $supplier_items[] = array(
@@ -112,7 +121,17 @@ class SupplierController extends Controller
                     );
                 }
             }
-            print_r($supplier_items);
+            if(count($supplier_items)){
+                foreach ($supplier_items as $supplier_item) {
+                    $transaction_details = new InvoiceTransactionDetails();
+                    $transaction_details->invoice_transaction_id = $transction_id;
+                    $transaction_details->item_id = $supplier_item['supplier_item'];
+                    $transaction_details->amount = $supplier_item['amount'];
+                    $transaction_details->save();
+                }
+            }
         });
+        Session::flash('success','Invoice has been generated');
+        redirect('invoices');
     }
 }

@@ -59,7 +59,17 @@
                                     <label class="label col col-2">Number Plate</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" name="number_plate" autocomplete="off">
+                                            <input type="text" value="{{ old('number_plate') }}" name="number_plate" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Alias Name</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" value="{{ old('alias_name') }}" name="alias_name" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -70,18 +80,21 @@
                                     <label class="label col col-2">Owner</label>
                                     <div class="col col-10">
                                         <label class="input">
-                                            <select name="status" class="form-control">
+                                            <select name="owner_id" class="form-control">
                                                 <option value="1">Select Owner</option>
-                                                        {{--@if(count($owners))--}}
-                                                            {{--@foreach($owners as $owner)--}}
-                                                                {{--<option value="{{ $owner->id }}">{{ $owner->firstname }}</option>--}}
-                                                                {{--@endforeach--}}
-                                                            {{--@endif--}}
+                                                        @if(count($owners))
+                                                            @foreach($owners as $owner)
+                                                                <option value="{{ $owner->id }}">{{ $owner->firstname.' '.$owner->surname }}</option>
+                                                                @endforeach
+                                                            @endif
                                             </select>
                                         </label>
                                     </div>
                                 </div>
                             </section>
+
+
+
 
                             <section>
                                 <div class="row">

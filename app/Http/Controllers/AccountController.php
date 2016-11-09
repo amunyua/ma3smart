@@ -28,13 +28,15 @@ class AccountController extends Controller
     public function getAccounts(){
         $daily_trans = DailyTransaction::all();
         $buses = Bus::all();
-        $drivers = Masterfile::all();
+        $drivers = Masterfile::where('user_role','Driver')->get();
+        $conductors = Masterfile::where('user_role','Conductor')->get();
         $expenses = Expense::where('amount_type','Custom',['status','1'])->get();
         return view('configurations.account',array(
             'buses'=>$buses,
             'drivers'=>$drivers,
             'expenses'=>$expenses,
-            'daily_trans'=>$daily_trans
+            'daily_trans'=>$daily_trans,
+            'conductors'=>$conductors
         ));
     }
 
@@ -45,7 +47,8 @@ class AccountController extends Controller
             'transaction_date'=>'required|unique:daily_transactions,transaction_date',
             'total_amount_collected'=>'required',
             'actual_banked'=>'required',
-            'total_trips'=>'required'
+            'total_trips'=>'required',
+            'conductor'=>'required'
         ));
 
         if(DB::transaction(function (){
@@ -57,6 +60,7 @@ class AccountController extends Controller
             $daily_transaction->driver_id = Input::get('driver_id');
             $daily_transaction->total_amount_collected = Input::get('total_amount_collected');
             $daily_transaction->total_trips = Input::get('total_trips');
+            $daily_transaction->conductor_id = Input::get('conductor');
             $daily_transaction->save();
             //return the transaction id to be used in other tables
 
