@@ -81,6 +81,7 @@ Route::get('/masterfiles','MasterfileController@index');
 Route::get('daily-report','ReportsController@getDailyReport');
 Route::get('/view-report/{id}','ReportsController@viewDailyReport');
 Route::get('/all-transactions','ReportsController@viewAllTransactionsReport');
+Route::get('/supplier-report/{id}','ReportsController@getSupplierReport');
 
 ####  Masterfiles
 Route::get('/new-mf', 'MasterfileController@index');
@@ -96,3 +97,5 @@ Route::post('/store-supplier-item','SupplierController@storeSupplierItem');
 Route::get('/invoices','SupplierController@getInvoices');
 Route::get('/load-invoice-fields/{id}','SupplierController@loadInvoiceFields');
 Route::post('/raise-invoice','SupplierController@createInvoice');
+
+#### reports

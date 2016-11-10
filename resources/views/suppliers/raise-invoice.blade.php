@@ -22,7 +22,7 @@
             <th>Supplier</th>
             <th>Registration Number</th>
             <th>Invoice Date</th>
-            <th>View Invoice</th>
+            <th>View Details</th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $vehicle->number_plate }}</td>
                         <td>{{ $transaction->transaction_date }}</td>
-                        <td><?php echo '<a class="btn btn-small btn-success">View </a>'?></td>
+                        <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-small btn-success">View </a>'?></td>
                     </tr>
                     @endforeach
                 @endif

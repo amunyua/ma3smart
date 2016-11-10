@@ -23,12 +23,14 @@
             <th>Vehicle</th>
             <th>Date</th>
             <th>Driver</th>
+            <th>Conductor</th>
             <th>Total Coll.</th>
             <th>Total Trips</th>
             <th>Total Expenses</th>
             <th>Bank Expected</th>
             <th>Actual Banked</th>
             <th>Variance</th>
+            <th>Fuel Ratio</th>
         </tr>
         </thead>
         <tbody>
@@ -46,14 +48,36 @@
                     ->where('transaction_id',$report->id)->first();
                     $vehicle_plates = \App\Bus::find($report->bus_id);
                     $driver = \App\Masterfile::find($report->driver_id);
+                    $conductor = \App\Masterfile::find($report->conductor_id);
                     $total_amount_col = $total_amount_col + $report->total_amount_collected;
                     $total_trips = $total_trips + $report->total_trips;
-                    $total_expenses = $total_expenses + $report->total_expenses;
+                    $expense = \Illuminate\Support\Facades\DB::table('daily_expenses')
+                            ->select(\Illuminate\Support\Facades\DB::raw('sum(amount) as total_expenses'))
+                            ->where('transaction_id',$report->id)->first();
+                    $total_expenses = $total_expenses + $expense->total_expenses;
+
+
+                        //get the fuel ratio
+                    //first we get the expense if where code = FUEL
+                    $name = \Illuminate\Support\Facades\DB::table('expenses')
+                            ->select('id')
+                            ->where('code','FUEL')->first();
+                    //now since we have the expense id, we can get the amount of fuel consumed on a specific day
+                    $fuel_amount = \Illuminate\Support\Facades\DB::table('daily_expenses')
+                        ->select(\Illuminate\Support\Facades\DB::raw('amount'))
+                        ->where([
+                                ['transaction_id',$report->id],
+                                ['expense_id',$name->id]
+                            ])
+                        ->first();
+                    //now ew have the amount of fuel consumed on that day
+                        //to get the ratio we devide this amount by the number of trips
+                    $fuel_ratio = $fuel_amount->amount/$report->total_trips;
                     $total_expected=0;
                     $total_banked = $total_banked  + $bank_details->actual_banked ;
                     $total_variance = 0;
                     $t_C = $report->total_amount_collected;
-                    $e = $report->total_expenses;
+                    $e = $expense->total_expenses;
                     $e_b = $t_C - $e;
                     $variance = $e_b - $bank_details->actual_banked;
                     $variance_t = $variance_t + $variance;
@@ -63,27 +87,30 @@
                     <td>{{ $vehicle_plates->number_plate }}</td>
                     <td>{{ $report->transaction_date }}</td>
                     <td>{{ $driver->surname.' '.$driver->firstname.' '.$driver->middlename }}</td>
+                    <td>{{ $conductor->surname.' '.$conductor->firstname.' '.$conductor->middlename }}</td>
                     <td><?php echo number_format($report->total_amount_collected,2) ?></td>
                     <td>{{ $report->total_trips }}</td>
-                    <td>{{  number_format($report->total_expenses,2) }}</td>
+                    <td>{{  number_format($expense->total_expenses,2) }}</td>
                     <td>{{ number_format($t_C - $e,2) }}</td>
                     <td>{{ number_format($bank_details->actual_banked,2) }}</td>
-                    <td>{{ $variance }}</td>
+                    <td>{{ number_format($variance,2) }}</td>
+                    <td>{{ number_format($fuel_ratio,2) }}</td>
                 </tr>
             @endforeach
                 <tr>
 
-                    <td colspan="4" style="text-align:center;font-weight:bold;font-style: italic">Totals:</td>
+                    <td colspan="5" style="text-align:right;font-weight:bold;font-style: italic">Totals:</td>
                     <td style="font-weight:bold">{{ number_format($total_amount_col,2) }}</td>
                     <td style="font-weight:bold">{{ $total_trips }}</td>
                     <td style="font-weight:bold">{{ number_format($total_expenses,2) }}</td>
                     <td style="font-weight:bold">{{ number_format($total_amount_col - $total_expenses,2) }}</td>
                     <td style="font-weight:bold">{{ number_format($total_banked,2) }}</td>
                     <td style="font-weight:bold">{{ number_format($variance_t,2) }}</td>
+                    <td style="font-weight:bold"></td>
 
                 </tr>
                 <tr>
-                    <td colspan="10" style="text-align:right;font-weight:bold"> []</td>
+                    <td colspan="12" style="text-align:right;font-weight:bold"> []</td>
                     {{--<td colspan="2" style="text-align:right;font-weight:bold"></td>--}}
                 </tr>
             @endif

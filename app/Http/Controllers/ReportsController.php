@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function getDailyReport(){
         $daily_reports = DB::table('daily_report_view')
             ->where('transaction_date',date('Y-m-d'))
@@ -18,7 +22,7 @@ class ReportsController extends Controller
 
     public function viewDailyReport($id){
         $daily_reports = DB::table('daily_report_view')
-            ->where('transaction_id',$id)
+            ->where('id',$id)
             ->get();
         return view('reports.daily-report',array(
             'daily_reports'=>$daily_reports
@@ -27,8 +31,20 @@ class ReportsController extends Controller
 
     public function viewAllTransactionsReport(){
         $reports =DB::table('on_demand_daily_report')->get();
+//        print_r($reports);
         return view('reports.on-demand-report',array(
             'reports'=>$reports
         ));
+    }
+
+    public function getSupplierReport($id){
+        if(!empty($id)) {
+            $reports = DB::table('supplier_report_view')
+                ->where('id', $id)->get();
+            return view('reports.supplier-report',array(
+                'reports'=>$reports
+            ));
+        }
+        return view('reports.supplier-report');
     }
 }

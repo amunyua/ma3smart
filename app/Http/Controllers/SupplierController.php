@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Session;
 
 class SupplierController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function getSuppliers(){
         $suppliers = Supplier::all();
         return view('suppliers.suppliers',array(

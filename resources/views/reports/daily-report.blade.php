@@ -19,8 +19,11 @@
     <table class="table table-striped table-bordered table-hover" width="100%">
         <thead>
         <tr>
+            <th colspan="5" style="text-align: center;">Date: {{ (!empty($daily_reports[0]->transaction_date))? date('D M, Y',strtotime($daily_reports[0]->transaction_date)): '','<br>' }}</th>
+        </tr>
+        <tr>
             <th>ID</th>
-            <th>Date</th>
+            <th style="border: none;"></th>
             <th></th>
             <th>Expense</th>
             <th>Amount</th>
