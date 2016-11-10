@@ -47,4 +47,12 @@ class ReportsController extends Controller
         }
         return view('reports.supplier-report');
     }
+
+    public function getFilteredData(Request $request){
+        if(isset($request->date_range)){
+            $data = explode('-',$request->date_range);
+            echo $date1 = $data[0];
+            echo $date2 = $data[1];
+        }
+    }
 }

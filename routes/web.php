@@ -82,6 +82,7 @@ Route::get('daily-report','ReportsController@getDailyReport');
 Route::get('/view-report/{id}','ReportsController@viewDailyReport');
 Route::get('/all-transactions','ReportsController@viewAllTransactionsReport');
 Route::get('/supplier-report/{id}','ReportsController@getSupplierReport');
+Route::post('/filter_report','ReportsController@getFilteredData');
 
 ####  Masterfiles
 Route::get('/new-mf', 'MasterfileController@index');

@@ -19,7 +19,7 @@
     <table class="table table-striped table-bordered table-hover" width="100%">
         <thead>
         <tr>
-            <th colspan="2" rowspan="3" style="text-align: center">
+            <th colspan="2" rowspan="3" style="text-align: center; font-size: 20px">
                 <?php
                     if(!empty($reports[0]->supplier_id)){
                         $supplier = \App\Supplier::find($reports[0]->supplier_id);
@@ -50,8 +50,8 @@
                     @endforeach
                 @endif
             <tr>
-                <td>Totals</td>
-                <td style="">{{ number_format($total_amount,2) }}</td>
+                <td style="font-weight: bold;">Totals</td>
+                <td style="font-weight: bold">{{ (isset($total_amount))? number_format($total_amount,2): '' }}</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:right;font-weight:bold"> []</td>

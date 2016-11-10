@@ -16,6 +16,37 @@
 
 @section('content')
     @include('layouts.includes._messages')
+    <div class="widget-body-toolbar">
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Type invoice number or date...">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <form method="post" action="{{ url('filter_report') }}">
+                    {{ csrf_field() }}
+                    <div class="input-group">
+                        <input required class="form-control m-wrap m-ctrl-medium  date_range" type="text" name="date_range" placeholder="Select a date range to search...">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
     <table class="table table-striped table-bordered table-hover" width="100%">
         <thead>
         <tr>

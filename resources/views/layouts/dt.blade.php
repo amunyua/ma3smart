@@ -19,6 +19,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ URL::asset('css/smartadmin-production.min.css') }}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ URL::asset('css/smartadmin-skins.min.css') }}">
 
+    <!-- date picker jquery-->
+
+    <link rel="stylesheet" type="text/css" href="{{  URL::asset('assets/plugins/bootstrap-datepicker/css/datepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{  URL::asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
+
+
     <!-- SmartAdmin RTL Support -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{ URL::asset('css/smartadmin-rtl.min.css') }}">
 
@@ -256,14 +262,14 @@
 <script data-pace-options='{ "restartOnRequestAfter": true }' src="{{ URL::asset('js/plugin/pace/pace.min.js') }}"></script>
 
 <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' ) }} "></script>
 <script>
     if (!window.jQuery) {
         document.write('<script src="{{ URL::asset('js/libs/jquery-2.1.1.min.js') }}"><\/script>');
     }
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js' ) }} "></script>
 <script>
     if (!window.jQuery.ui) {
         document.write('<script src="{{ URL::asset('js/libs/jquery-ui-1.10.3.min.js') }}"><\/script>');
@@ -335,6 +341,13 @@
 <script src="{{ URL::asset('js/plugin/datatables/dataTables.tableTools.min.js') }}"></script>
 <script src="{{ URL::asset('js/plugin/datatables/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('js/plugin/datatable-responsive/datatables.responsive.min.js') }}"></script>
+
+
+<!-- date and date range -->
+<script type="text/javascript" src="{{ URL::asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' ) }} "></script>
+<script type="text/javascript" src="{{ URL::asset('assets/plugins/bootstrap-daterangepicker/date.js' ) }} "></script>
+<script type="text/javascript" src="{{ URL::asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js' ) }} "></script>
+<script type="text/javascript" src="{{ URL::asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' ) }} "></script>
 
 <!-- JQUERY SELECT2 INPUT -->
 <script src="{{ URL::asset('js/plugin/select2/select2.min.js') }}"></script>
@@ -555,6 +568,7 @@
 <script>
     $(document).ready(function(){
         $('.live_search').select2();
+        $('.date_range').daterangepicker();
     });
 </script>
 @stack('js')
