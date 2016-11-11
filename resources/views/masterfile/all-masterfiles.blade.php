@@ -12,7 +12,7 @@
 @section('button')
     <ul class="list-inline list-unstyled pull-right">
     <li>
-    <a data-toggle="modal" href="#edit-route" id="edit-route-btn" class="btn btn-warning btn-sm header-btn  pull-right ">
+    <a data-toggle="modal" href="#edit-route" id="edit-masterfile-btn" class="btn btn-warning btn-sm header-btn  pull-right ">
         <i class="fa fa-edit"></i> Edit masterfile
     </a>
     </li>
@@ -41,7 +41,22 @@
         </tr>
         </thead>
         <tbody>
-
+            @if(count($all_masterfiles))
+                @foreach($all_masterfiles as $masterfile)
+                    <?php $contact = \App\Contact::where('masterfile_id',$masterfile->id)->first(); ?>
+                    <tr>
+                        <th>{{ $masterfile->id }}</th>
+                        <th>{{ $masterfile->sirname.' '.$masterfile->firstname.' '.$masterfile->middlename }}</th>
+                        <th>{{ $masterfile->id_no }}</th>
+                        <th>{{ $masterfile->user_role }}</th>
+                        <th>{{ (!empty($contact->phone_number))? $contact->phone_number:''  }}</th>
+                        <th>{{ (!empty($contact->email))? $contact->email:''  }}</th>
+                        <th>{{ (!empty($contact->physical_address))? $contact->physical_address:''  }}</th>
+                        <th>{{ (!empty($contact->city))? $contact->city:''  }}</th>
+                        <th>{{ (!empty($contact->postal_address))? $contact->postal_address:''  }}</th>
+                    </tr>
+                    @endforeach
+                @endif
         </tbody>
     </table>
 @endsection

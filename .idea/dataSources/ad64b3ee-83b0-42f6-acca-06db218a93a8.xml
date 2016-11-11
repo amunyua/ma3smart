@@ -251,7 +251,7 @@
     </column>
     <column id="86" parent="16" name="transaction_date">
       <mandatory>1</mandatory>
-      <data-type>date|0</data-type>
+      <data-type>bigint(20)|0</data-type>
     </column>
     <column id="87" parent="16" name="bus_id">
       <mandatory>1</mandatory>
@@ -1093,7 +1093,7 @@
     </column>
     <column id="297" parent="35" name="transaction_date">
       <mandatory>1</mandatory>
-      <data-type>date|0</data-type>
+      <data-type>bigint(20)|0</data-type>
     </column>
     <column id="298" parent="35" name="bus_id">
       <mandatory>1</mandatory>
@@ -1131,7 +1131,7 @@
     </column>
     <column id="307" parent="36" name="transaction_date">
       <mandatory>1</mandatory>
-      <data-type>date|0</data-type>
+      <data-type>bigint(20)|0</data-type>
     </column>
     <column id="308" parent="36" name="bus_id">
       <mandatory>1</mandatory>

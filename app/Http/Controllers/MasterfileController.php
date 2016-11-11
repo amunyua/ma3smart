@@ -156,7 +156,10 @@ class MasterfileController extends Controller
     }
 
     public function getAllMasterfiles(){
-        return view('masterfile.all-masterfiles');
+        $all_masterfiles = Masterfile::all();
+        return view('masterfile.all-masterfiles',array(
+            'all_masterfiles'=>$all_masterfiles
+        ));
     }
 
     public function loadMasterFiles(){

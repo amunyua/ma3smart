@@ -21,14 +21,26 @@
         <div class="row">
 
             <div class="col-sm-4">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Type invoice number or date...">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i> Search
-                        </button>
+                <form method="post" action="{{ url('filter_report') }}">
+                    {{ csrf_field() }}
+                    <div class="input-group">
+                        <select name="driver_id" required class="form-control">
+                            <option value="">Select Driver</option>
+                            @if(count($drivers))
+                                @foreach($drivers as $driver)
+                                    <option value="{{ $driver->id }}">{{ $driver->firstname.' '.$driver->sirname.' '.$driver->middlename  }}</option>
+                                    @endforeach
+                                @endif
+
+                        </select>
+                        {{--<input class="form-control" type="text" placeholder="Type invoice number or date...">--}}
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="col-sm-4">
                 <form method="post" action="{{ url('filter_report') }}">

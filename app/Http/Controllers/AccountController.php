@@ -56,7 +56,7 @@ class AccountController extends Controller
 
             $daily_transaction = new DailyTransaction();
             $daily_transaction->bus_id = Input::get('vehicle');
-            $daily_transaction->transaction_date = Input::get('transaction_date');
+            $daily_transaction->transaction_date = strtotime(Input::get('transaction_date'));
             $daily_transaction->driver_id = Input::get('driver_id');
             $daily_transaction->total_amount_collected = Input::get('total_amount_collected');
             $daily_transaction->total_trips = Input::get('total_trips');

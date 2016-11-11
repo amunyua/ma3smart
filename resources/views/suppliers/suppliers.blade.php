@@ -4,9 +4,24 @@
 @section('widget-desc', 'All Suppliers')
 
 @section('button')
-    <button type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-user-role">
-        <i class="fa fa-plus"></i> Add Supplier
-    </button>
+
+    <ul class="list-inline list-unstyled pull-right">
+        <li>
+            <a type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-user-role">
+                <i class="fa fa-plus"></i> Add Supplier
+            </a>
+        </li>
+        <li>
+            <a data-toggle="modal" href="#edit-route" id="edit-masterfile-btn" class="btn btn-warning btn-sm header-btn  pull-right ">
+                <i class="fa fa-edit"></i> Edit Supplier
+            </a>
+        </li>
+        <li>
+            <a data-toggle="modal" href="#delete-supplier" id="edit-route-btn" class="btn btn-danger btn-sm header-btn pull-right ">
+                <i class="fa fa-edit"></i> Delete supplier
+            </a>
+        </li>
+    </ul>
 @endsection
 
 @section('content')
@@ -165,7 +180,7 @@
 
     {{--modal for delete--}}
 
-    <div class="modal fade" id="delete-user-role" role="dialog">
+    <div class="modal fade" id="delete-supplier" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -178,13 +193,13 @@
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
+                    <form id="delete-role" class="smart-form" action="{{ url('delete-supplier/') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
                                     <p class="p col col-10">
-                                        Are you sure you want to delete this role?
+                                        Are you sure you want to delete this supplier?
                                     </p>
                                 </div>
                             </section>
@@ -213,5 +228,5 @@
 @endsection
 
 @push('js')
-<script src="{{ URL::asset('custom_js/user_manager/user_roles.js') }}"></script>
+<script src="{{ URL::asset('custom_js/supplier/all_suppliers.js') }}"></script>
 @endpush

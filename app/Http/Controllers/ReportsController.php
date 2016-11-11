@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Masterfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,8 +33,10 @@ class ReportsController extends Controller
     public function viewAllTransactionsReport(){
         $reports =DB::table('on_demand_daily_report')->get();
 //        print_r($reports);
+        $drivers = Masterfile::where('user_role','Driver')->get();
         return view('reports.on-demand-report',array(
-            'reports'=>$reports
+            'reports'=>$reports,
+            'drivers'=>$drivers
         ));
     }
 
@@ -51,8 +54,24 @@ class ReportsController extends Controller
     public function getFilteredData(Request $request){
         if(isset($request->date_range)){
             $data = explode('-',$request->date_range);
-            echo $date1 = $data[0];
-            echo $date2 = $data[1];
+            echo $date1 = date('Y-d-m',strtotime($data[0]));
+            echo $date2 = date('Y-d-m',strtotime($data[1]));
+//            echo $date2 = $data[1];
+            $reports = DB::table('on_demand_daily_report')
+                ->whereBetween('transaction_date', [$date1, $date2])
+                ->get();
+            print_r($reports);
+        }elseif (isset($request->driver_id)){
+//            var_dump($_POST);
+            $reports = DB::table('on_demand_daily_report')
+                ->where('driver_id',$request->driver_id)
+                ->get();
+//            print_r($reports);
+            $drivers = Masterfile::where('user_role','Driver')->get();
+            return view('reports.on-demand-report',array(
+                'reports'=>$reports,
+                'drivers'=>$drivers
+            ));
         }
     }
 }
