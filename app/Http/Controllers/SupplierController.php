@@ -138,4 +138,11 @@ class SupplierController extends Controller
         Session::flash('success','Invoice has been generated');
         redirect('invoices');
     }
+
+    public function destroySupplier($id){
+        $supplier = Supplier::find($id);
+        $supplier->destroy();
+        Session::flash('success','The supplier has been deleted');
+        return redirect('suppliers');
+    }
 }

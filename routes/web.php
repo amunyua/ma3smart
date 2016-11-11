@@ -98,5 +98,6 @@ Route::post('/store-supplier-item','SupplierController@storeSupplierItem');
 Route::get('/invoices','SupplierController@getInvoices');
 Route::get('/load-invoice-fields/{id}','SupplierController@loadInvoiceFields');
 Route::post('/raise-invoice','SupplierController@createInvoice');
+Route::post('/delete-supplier/{id}','SupplierController@destroySupplier');
 
 #### reports

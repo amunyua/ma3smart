@@ -11,16 +11,16 @@
                 <i class="fa fa-plus"></i> Add Supplier
             </a>
         </li>
-        <li>
-            <a data-toggle="modal" href="#edit-route" id="edit-masterfile-btn" class="btn btn-warning btn-sm header-btn  pull-right ">
-                <i class="fa fa-edit"></i> Edit Supplier
-            </a>
-        </li>
-        <li>
-            <a data-toggle="modal" href="#delete-supplier" id="edit-route-btn" class="btn btn-danger btn-sm header-btn pull-right ">
-                <i class="fa fa-edit"></i> Delete supplier
-            </a>
-        </li>
+        {{--<li>--}}
+            {{--<a data-toggle="modal" href="#edit-route" id="edit-masterfile-btn" class="btn btn-warning btn-sm header-btn  pull-right ">--}}
+                {{--<i class="fa fa-edit"></i> Edit Supplier--}}
+            {{--</a>--}}
+        {{--</li>--}}
+        {{--<li>--}}
+            {{--<a data-toggle="modal" href="#delete-supplier" id="edit-route-btn" class="btn btn-danger btn-sm header-btn pull-right ">--}}
+                {{--<i class="fa fa-edit"></i> Delete supplier--}}
+            {{--</a>--}}
+        {{--</li>--}}
     </ul>
 @endsection
 
@@ -37,6 +37,8 @@
             <th>Phone Number</th>
             <th>City</th>
             <th>Physical Addres</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +53,8 @@
                         <td>{{ '0'.$supplier->phone_number }}</td>
                         <td>{{ $supplier->city }}</td>
                         <td>{{ $supplier->physical_location }}</td>
+                        <td><a href="#edit-supplier" edit-id ="{{ $supplier->id }}" id="edit-supplier-btn" action="{{ url('store-supplier') }}" data-toggle="modal" class="btn btn-warning btn-xs">Edit</a></td>
+                        <td><a href="#delete-supplier" action="{{ url('delete-supplier/'.$supplier->id) }}" id="delete-supplier-btn" data-toggle="modal" class="btn btn-danger btn-xs">Delete</a></td>
                     </tr>
                     @endforeach
                 @endif
@@ -177,6 +181,124 @@
         </div><!-- /.modal-dialog -->
     </div>
 
+    {{--modal for edit--}}
+    <div class="modal fade" id="edit-supplier" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Edit Supplier
+                    </h4>
+                </div>
+                <div class="modal-body no-padding">
+
+                    <form id="add-menu-form" class="smart-form"  method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Supplier Name</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="supplier_name" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Supplier Role</label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="role" required class="form-control">
+                                                <option value="Garage">Garage</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Code</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="code" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Registration Number</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text"  name="registration_number" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Phone Number</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="phone_number" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">City</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="city" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Physical Location</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required name="physical_location" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+
+
+                        </fieldset>
+
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <i class="fa fa-remove"></i> Cancel
+                            </button>
+
+                        </footer>
+                    </form>
+
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
 
     {{--modal for delete--}}
 
@@ -188,12 +310,12 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Delete User Role
+                        Delete Supplier
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-supplier/') }}" method="post">
+                    <form id="delete-supplier-form" class="smart-form"  method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
@@ -228,5 +350,5 @@
 @endsection
 
 @push('js')
-<script src="{{ URL::asset('custom_js/supplier/all_suppliers.js') }}"></script>
+<script src="{{ URL::asset('my_js/supplier/all_suppliers.js') }}"></script>
 @endpush
