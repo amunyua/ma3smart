@@ -71,7 +71,7 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Add An Expense
+                        Add Supplier
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
@@ -119,7 +119,7 @@
                                     <label class="label col col-2">Registration Number</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text"  name="registration_number" autocomplete="off">
+                                            <input type="number"  name="registration_number" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>

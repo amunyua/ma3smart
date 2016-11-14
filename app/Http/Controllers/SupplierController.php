@@ -136,13 +136,27 @@ class SupplierController extends Controller
             }
         });
         Session::flash('success','Invoice has been generated');
-        redirect('invoices');
+        return redirect('invoices');
     }
 
     public function destroySupplier($id){
         $supplier = Supplier::find($id);
-        $supplier->destroy();
+        $supplier->delete();
         Session::flash('success','The supplier has been deleted');
         return redirect('suppliers');
+    }
+
+    public function deleteSuppE($id){
+        $del_id = SupplierEntity::find($id);
+        $del_id->delete();
+        Session::flash('success','Supplier item deleted');
+        return redirect('supplier-items');
+    }
+
+    public function deleteInvoice($id){
+        $del_id = InvoiceTransactions::find($id);
+        $del_id->delete();
+        Session::flash('success','The invoice has been deleted');
+        return redirect('invoices');
     }
 }

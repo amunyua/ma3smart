@@ -22,7 +22,10 @@
             <th>Supplier</th>
             <th>Registration Number</th>
             <th>Invoice Date</th>
+            <th>Invoice Amount</th>
             <th>View Details</th>
+            <th>Make Payment</th>
+            <th>Delete Invoice</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +36,13 @@
                     ?>
                     <tr>
                         <td>{{ $transaction->id }}</td>
-                        <td>{{ $supplier->supplier_name }}</td>
-                        <td>{{ $vehicle->number_plate }}</td>
+                        <td>{{ (!empty($supplier->supplier_name))? $supplier->supplier_name: ''}}</td>
+                        <td>{{ (!empty($vehicle->number_plate))? $vehicle->number_plate: '' }}</td>
                         <td>{{ $transaction->transaction_date }}</td>
-                        <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-small btn-success">View </a>'?></td>
+                        <td>{{ $transaction->transaction_date }}</td>
+                        <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-xs btn-success">View </a>'?></td>
+                        <td><a href="#paybill" class="btn btn-warning btn-xs" data-toggle="modal">Make payment</a> </td>
+                        <td><a href="#delete-invoice-modal" action="{{ url('delete-invoice/'.$transaction->id) }}" data-toggle="modal" class="btn btn-danger btn-xs delete-invoice">Delete</a> </td>
                     </tr>
                     @endforeach
                 @endif
@@ -132,7 +138,7 @@
 
     {{--modal for delete--}}
 
-    <div class="modal fade" id="delete-user-role" role="dialog">
+    <div class="modal fade" id="delete-invoice-modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -140,18 +146,18 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Delete User Role
+                        Delete Invoice
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
+                    <form id="delete-invoice-form" class="smart-form"  method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
                                     <p class="p col col-10">
-                                        Are you sure you want to delete this role?
+                                        Are you sure you want to delete this invoice?
                                     </p>
                                 </div>
                             </section>
@@ -163,6 +169,87 @@
                         <footer>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-save"></i> Yes
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                <i class="fa fa-remove"></i> Cancel
+                            </button>
+
+                        </footer>
+                    </form>
+
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    {{--modal for settling bills--}}
+
+    <div class="modal fade" id="paybill" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Make Payment
+                    </h4>
+                </div>
+                <div class="modal-body no-padding">
+
+                    <form id="delete-invoice-form" class="smart-form"  method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Payment Date</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="date" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Initial Amount</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Balance</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Pay</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                        </fieldset>
+
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Make Payment
                             </button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">
                                 <i class="fa fa-remove"></i> Cancel

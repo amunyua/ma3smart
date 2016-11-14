@@ -1,33 +1,33 @@
 @extends('layouts.login')
 @section('title', 'Ma3Smart|login')
-@section('system_name', 'Ma3Smart Management solution')
+@section('system_name', 'Ma3Smart')
 
 @section('content')
     <div class="hero">
-        <div class="pull-left login-desc-box-l">
-            <h4 class="paragraph-header">A universal Management solution for Matatu Owners.</h4>
-            <div class="login-app-icons">
-                <a href="javascript:void(0);" class="btn btn-danger btn-sm">Ma3Smart</a>
-                <a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>
-            </div>
-        </div>
+        {{--<div class="pull-left login-desc-box-l">--}}
+            {{--<h4 class="paragraph-header">A universal Management solution for Matatu Owners.</h4>--}}
+            {{--<div class="login-app-icons">--}}
+                {{--<a href="javascript:void(0);" class="btn btn-danger btn-sm">Ma3Smart</a>--}}
+                {{--<a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
         <img src="{{ URL::asset('img/demo/isuzu.png') }}" class="pull-right display-image" alt="" style="width:350px; height: 200px; margin-top: 50px;">
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <h5 class="about-heading">About Ma3Smart solution - Are you up to date?</h5>
-            <p>
+        {{--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">--}}
+            {{--<h5 class="about-heading">About Ma3Smart solution - Are you up to date?</h5>--}}
+            {{--<p>--}}
                 {{--We provide motorcycles on lease terms basis to our clients.--}}
-            </p>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <h5 class="about-heading">Ma3Smart!</h5>
-            <p>
+            {{--</p>--}}
+        {{--</div>--}}
+        {{--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">--}}
+            {{--<h5 class="about-heading">Ma3Smart!</h5>--}}
+            {{--<p>--}}
                 {{--We provide motorcycles on lease terms to our clients--}}
-            </p>
-        </div>
+            {{--</p>--}}
+        {{--</div>--}}
     </div>
 @endsection
 

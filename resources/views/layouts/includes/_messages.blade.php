@@ -7,6 +7,15 @@
     <br>
 
 @endif
+@if (Session::has('warning'))
+    <br>
+    <div class="alert alert-danger" role="alert">
+        <button class="close" data-dismiss="alert"> × </button>
+        <i class="fa fa-fw fa-check"></i><strong>Success </strong> {{ Session::get('warning') }}
+    </div>
+    <br>
+
+@endif
 
 @if(count($errors) > 0)
     <br>

@@ -128,7 +128,7 @@
                 <tr>
                     <td>{{ $report->id }}</td>
                     <td>{{ $vehicle_plates->number_plate }}</td>
-                    <td>{{ $report->transaction_date }}</td>
+                    <td>{{ date('d M Y',$report->transaction_date) }}</td>
                     <td>{{ $driver->surname.' '.$driver->firstname.' '.$driver->middlename }}</td>
                     <td>{{ $conductor->surname.' '.$conductor->firstname.' '.$conductor->middlename }}</td>
                     <td><?php echo number_format($report->total_amount_collected,2) ?></td>

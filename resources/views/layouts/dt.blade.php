@@ -113,7 +113,7 @@
 		* 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
 	-->
 
-<body class="smart-style-1 fixed-header fixed-ribbon fixed-page-footer">
+<body class="smart-style-1 fixed-header fixed-ribbon ">
 
 <!-- HEADER -->
 @include('layouts.includes.header')

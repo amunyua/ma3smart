@@ -32,7 +32,13 @@
 //         }
 //     }
 // }
-
+// alert('workong');
 $('#edit-masterfile-btn').on('click',function () {
 
+});
+
+$('.delete-masterfile-btn').on('click',function () {
+   var action = $(this).attr('action');
+    // alert(action);
+    $('#delete-masterfile-form').attr('action',action);
 });

@@ -23,4 +23,9 @@ $('#supplier').on('change',function () {
         });
     }
 
-})
+});
+
+$('.delete-invoice').on('click',function () {
+    var action = $(this).attr('action');
+    $('#delete-invoice-form').attr('action',action);
+});

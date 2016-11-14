@@ -20,6 +20,7 @@
             <th>Supplier </th>
             <th>Amount</th>
             <th>status</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
                         <td>{{ $supplier_item->supplier_id }}</td>
                         <td>{{ $supplier_item->amount }}</td>
                         <td>{{ ($supplier_item->status == 1)? 'Active':'Inactive' }}</td>
+                        <td><a href="#delete-supplier-i" data-toggle="modal" action="{{ url('delete-sup-e/'.$supplier_item->id) }}" class="btn btn-danger btn-xs delete-s-p">Delete</a> </td>
                     </tr>
                     @endforeach
                 @endif
@@ -130,7 +132,7 @@
 
     {{--modal for delete--}}
 
-    <div class="modal fade" id="delete-user-role" role="dialog">
+    <div class="modal fade" id="delete-supplier-i" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,18 +140,18 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Delete User Role
+                        Delete Supplier item
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
+                    <form id="delete-supp-item" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
                                     <p class="p col col-10">
-                                        Are you sure you want to delete this role?
+                                        Are you sure you want to delete this supplier item?
                                     </p>
                                 </div>
                             </section>
@@ -178,5 +180,5 @@
 @endsection
 
 @push('js')
-<script src="{{ URL::asset('custom_js/user_manager/user_roles.js') }}"></script>
+<script src="{{ URL::asset('my_js/supplier/supplier-entity.js') }}"></script>
 @endpush

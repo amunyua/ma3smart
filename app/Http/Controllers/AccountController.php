@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class AccountController extends Controller
 {
+    private $_date;
 
     public function __construct()
     {
@@ -50,13 +51,17 @@ class AccountController extends Controller
             'total_trips'=>'required',
             'conductor'=>'required'
         ));
+//        echo $date =  date('Y-m-d', strtotime($request->transaction_date));
+        $date = strtotime($request->transaction_date);
+//        var_dump($request->transaction_date);die;
+        echo $this->_date = strtotime($request->transaction_date);
+//        echo date('Y-m-d',1477958400).'<br>';die;
 
         if(DB::transaction(function (){
             //store a transaction on the daily transactions table and return the transaction id
-
             $daily_transaction = new DailyTransaction();
             $daily_transaction->bus_id = Input::get('vehicle');
-            $daily_transaction->transaction_date = strtotime(Input::get('transaction_date'));
+            $daily_transaction->transaction_date = $this->_date;
             $daily_transaction->driver_id = Input::get('driver_id');
             $daily_transaction->total_amount_collected = Input::get('total_amount_collected');
             $daily_transaction->total_trips = Input::get('total_trips');
@@ -110,6 +115,12 @@ class AccountController extends Controller
         })){
         }
         Session::flash('success','The Transaction has been Created');
+        return redirect('accounts');
+    }
+    public function deleteTransaction($id){
+        $id = DailyTransaction::find($id);
+        $id->delete();
+        Session::flash('success','The transaction has been deleted');
         return redirect('accounts');
     }
 }
