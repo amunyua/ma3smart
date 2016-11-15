@@ -14,12 +14,19 @@ class CreateCustomerBillsTable extends Migration
     public function up()
     {
         Schema::create('customer_bills', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->index()->unsigned();
             $table->float('bill_amount');
+            $table->integer('invoice_id')->unsigned()
+                ->index()->nullable();
+            $table->foreign('invoice_id')
+                ->references('id')
+                ->on('invoice_transactions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->dateTime('bill_date');
-            $table->float('bill_amount_paid');
+            $table->float('bill_amount_paid')->nullable();
             $table->float('bill_balance');
-            $table->integer('bus_id');
+            $table->integer('bus_id')->nullable();
             $table->float('total_cash_received')->nullable();
             $table->date('bill_due_date')->nullable();
             

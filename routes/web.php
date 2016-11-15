@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'DashboardController@index');
-Route::get('/logout','DashboardController@index');
+//Route::get('/logout','DashboardController@index');
 
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
@@ -84,6 +84,7 @@ Route::get('/view-report/{id}','ReportsController@viewDailyReport');
 Route::get('/all-transactions','ReportsController@viewAllTransactionsReport');
 Route::get('/supplier-report/{id}','ReportsController@getSupplierReport');
 Route::post('/filter_report','ReportsController@getFilteredData');
+Route::get('account-status','ReportsController@accountStatus');
 
 ####  Masterfiles
 Route::get('/new-mf', 'MasterfileController@index');
@@ -103,5 +104,7 @@ Route::post('/raise-invoice','SupplierController@createInvoice');
 Route::delete('/delete-supplier/{id}','SupplierController@destroySupplier');
 Route::delete('/delete-sup-e/{id}','SupplierController@deleteSuppE');
 Route::delete('/delete-invoice/{id}','SupplierController@deleteInvoice');
+Route::get('/load-inv-details/{id}','SupplierController@loadInvoiceBillDetails');
+Route::post('pay-bill/{id}','SupplierController@payBill');
 
 #### reports

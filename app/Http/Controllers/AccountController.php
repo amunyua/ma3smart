@@ -7,6 +7,7 @@ use App\DailyBankAccumulations;
 use App\DailyExpenses;
 use App\DailyTransaction;
 use App\Expense;
+use App\Journal;
 use App\Masterfile;
 use Illuminate\Http\Request;
 
@@ -71,6 +72,7 @@ class AccountController extends Controller
 
             $transaction_id =$daily_transaction->id;
 
+
             //prepare an array to store all expenses
             $all_expenses = array();
 
@@ -112,6 +114,17 @@ class AccountController extends Controller
             $daily_bank_accumulation->actual_banked = Input::get('actual_banked');
             $daily_bank_accumulation->save();
 //            echo $b = $daily_bank_accumulation->id;
+
+            //record journal
+
+            $journal = new Journal();
+            $journal->bus_id = Input::get('vehicle');
+            $journal->amount = Input::get('actual_banked');
+            $journal->dr_cr = "CR";
+            $journal->particulars = 'Income for '.Input::get('transaction_date');
+            $journal->daily_transaction_id = $transaction_id;
+            $journal->status = true;
+            $journal->save();
         })){
         }
         Session::flash('success','The Transaction has been Created');

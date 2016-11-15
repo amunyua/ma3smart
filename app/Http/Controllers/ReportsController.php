@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Journal;
 use App\Masterfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -90,5 +91,12 @@ class ReportsController extends Controller
                 'drivers'=>$drivers
             ));
         }
+    }
+
+    public function accountStatus(){
+        $journals = Journal::all();
+        return view('reports.account_status',array(
+            'journals'=> $journals
+        ));
     }
 }

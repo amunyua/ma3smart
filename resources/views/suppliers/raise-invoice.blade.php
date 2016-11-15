@@ -18,7 +18,7 @@
     <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>Invoice Number</th>
             <th>Supplier</th>
             <th>Registration Number</th>
             <th>Invoice Date</th>
@@ -33,15 +33,16 @@
                 @foreach($transactions as $transaction)
                     <?php $supplier = \App\Supplier::find($transaction->supplier_id);
                             $vehicle = \App\Bus::find($transaction->vehicle_id);
+                            $invoice_amount = \App\CustomerBills::where('invoice_id',$transaction->id)->first();
                     ?>
                     <tr>
                         <td>{{ $transaction->id }}</td>
                         <td>{{ (!empty($supplier->supplier_name))? $supplier->supplier_name: ''}}</td>
                         <td>{{ (!empty($vehicle->number_plate))? $vehicle->number_plate: '' }}</td>
                         <td>{{ $transaction->transaction_date }}</td>
-                        <td>{{ $transaction->transaction_date }}</td>
+                        <td>{{ (!empty($invoice_amount->bill_amount))? number_format($invoice_amount->bill_amount,2):'' }}</td>
                         <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-xs btn-success">View </a>'?></td>
-                        <td><a href="#paybill" class="btn btn-warning btn-xs" data-toggle="modal">Make payment</a> </td>
+                        <td><a href="#paybill" action="{{ url('pay-bill/'.$transaction->id) }}" class="btn btn-warning btn-xs paybill_btn" invoice-id="{{ $transaction->id }}" id="" data-toggle="modal">Make payment</a> </td>
                         <td><a href="#delete-invoice-modal" action="{{ url('delete-invoice/'.$transaction->id) }}" data-toggle="modal" class="btn btn-danger btn-xs delete-invoice">Delete</a> </td>
                     </tr>
                     @endforeach
@@ -51,6 +52,7 @@
 @endsection
 
 @section('modals')
+    {{--modal for raising an invoice--}}
     <div class="modal fade" id="add-user-role" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -199,7 +201,7 @@
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-invoice-form" class="smart-form"  method="post">
+                    <form id="pay-bill-form" class="smart-form"  method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
@@ -217,17 +219,7 @@
                                     <label class="label col col-2">Initial Amount</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
-                                        </label>
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="row">
-                                    <label class="label col col-2">Balance</label>
-                                    <div class="col col-10">
-                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                            <input type="number" id="initial-amount" name="initial_amount" value="" autocomplete="off" disabled>
                                         </label>
                                     </div>
                                 </div>
@@ -235,10 +227,23 @@
 
                             <section>
                                 <div class="row">
+                                    <label class="label col col-2">Bill Balance</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" id="bill-balance" name="bill_balance" value="" autocomplete="off" disabled>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+                            <section>
+                                <div class="row">
                                     <label class="label col col-2">Pay</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="invoice_date" value="{{ date('Y-m-d') }}" autocomplete="off">
+                                            <input type="number"id="amount-paid" required name="amount_paid" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -248,7 +253,7 @@
                         </fieldset>
 
                         <footer>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" id="submit-btn" class="btn btn-primary">
                                 <i class="fa fa-save"></i> Make Payment
                             </button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">

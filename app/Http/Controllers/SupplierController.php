@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Bus;
+use App\CustomerBills;
 use App\InvoiceTransactionDetails;
 use App\InvoiceTransactions;
+use App\Journal;
 use App\Supplier;
 use App\SupplierEntity;
 use Illuminate\Http\Request;
@@ -95,7 +97,10 @@ class SupplierController extends Controller
     public function loadInvoiceFields($id){
 
         if($id != 0){
-            $supplier_items = SupplierEntity::where('status',true)->get();
+            $supplier_items = SupplierEntity::where([
+                ['status',true],
+                ['supplier_id',$id]
+            ])->get();
             return Response::json($supplier_items);
         }
     }
@@ -114,7 +119,7 @@ class SupplierController extends Controller
             $invoice_transaction->transaction_date = Input::get('invoice_date');
             $invoice_transaction->supplier_id = Input::get('supplier_id');
             $invoice_transaction->save();
-            $transction_id = $invoice_transaction->id;
+            $transaction_id = $invoice_transaction->id;
             $supplier_items = array();
 //            print_r($supplier_items);
             foreach ($_POST as $key => $post) {
@@ -126,14 +131,28 @@ class SupplierController extends Controller
                 }
             }
             if(count($supplier_items)){
+                $total_invoice_amount = 0;
                 foreach ($supplier_items as $supplier_item) {
+                    $total_invoice_amount= $total_invoice_amount + $supplier_item['amount'];
                     $transaction_details = new InvoiceTransactionDetails();
-                    $transaction_details->invoice_transaction_id = $transction_id;
+                    $transaction_details->invoice_transaction_id = $transaction_id;
                     $transaction_details->item_id = $supplier_item['supplier_item'];
                     $transaction_details->amount = $supplier_item['amount'];
                     $transaction_details->save();
                 }
             }
+            //create a customer bill\
+            $customer_bill = new CustomerBills();
+            $customer_bill->bill_amount = $total_invoice_amount;
+            $customer_bill->invoice_id = $transaction_id;
+            $customer_bill->bill_date = Input::get('invoice_date');
+            $customer_bill->bill_amount_paid = 0;
+            $customer_bill->bill_balance = $total_invoice_amount;
+            $customer_bill->bus_id = Input::get('vehicle_id');
+            $customer_bill->total_cash_received = 0;
+            $customer_bill->save();
+            $bill_id = $customer_bill->id;
+
         });
         Session::flash('success','Invoice has been generated');
         return redirect('invoices');
@@ -159,4 +178,44 @@ class SupplierController extends Controller
         Session::flash('success','The invoice has been deleted');
         return redirect('invoices');
     }
+
+    public function loadInvoiceBillDetails($id){
+        $results = CustomerBills::where('invoice_id',$id)->first();
+        return Response::json($results);
+    }
+
+    //function to proccess paybill
+    private $_id;
+
+    public function payBill(Request $request, $id){
+        $this->_id = $id;
+        $transaction = DB::transaction(function (){
+            $customer_bill = CustomerBills::where('invoice_id',$this->_id)->first();
+            $new_bill_amount_paid = $customer_bill->bill_amount_paid + Input::get('amount_paid');
+            $new_bill_balance = ($customer_bill->bill_amount - $new_bill_amount_paid);
+//            echo $new_bill_balance;die;
+            //update the bill details
+            $pay_bill = DB::table('customer_bills')
+            ->where('invoice_id', $this->_id)
+            ->update(['bill_amount_paid' => $new_bill_amount_paid,'bill_balance'=>$new_bill_balance ]);
+//            ->update(['bill_balance'=>$new_bill_balance ]);
+
+            //insert journal
+            $journal = new Journal();
+            $journal->bus_id = $customer_bill->bus_id;
+            $journal->amount = Input::get('amount_paid');
+            $journal->dr_cr = 'DB';
+            $journal->bill_id = $customer_bill->id;
+            $journal->particulars = 'Paid invoice number '.$this->_id;
+            $journal->status = true;
+            $journal->save();
+
+
+        });
+
+            Session::flash('success','Bill amount ('.$request->amount_paid.') has been paid successfully');
+
+        return redirect('invoices');
+    }
 }
+
