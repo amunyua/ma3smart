@@ -17,6 +17,7 @@ class ExpesesSeeder extends Seeder
         $expense->code = 'FUEL';
         $expense->amount_type = 'Custom';
         $expense->status = true;
+        $expense->amount = '0';
         $expense->save();
 
     }

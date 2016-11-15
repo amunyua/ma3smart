@@ -7,6 +7,7 @@ use App\DailyBankAccumulations;
 use App\DailyExpenses;
 use App\DailyTransaction;
 use App\Expense;
+use App\Journal;
 use App\Masterfile;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class AccountController extends Controller
 {
+    private $_date;
 
     public function __construct()
     {
@@ -50,13 +52,17 @@ class AccountController extends Controller
             'total_trips'=>'required',
             'conductor'=>'required'
         ));
+//        echo $date =  date('Y-m-d', strtotime($request->transaction_date));
+        $date = strtotime($request->transaction_date);
+//        var_dump($request->transaction_date);die;
+        echo $this->_date = strtotime($request->transaction_date);
+//        echo date('Y-m-d',1477958400).'<br>';die;
 
         if(DB::transaction(function (){
             //store a transaction on the daily transactions table and return the transaction id
-
             $daily_transaction = new DailyTransaction();
             $daily_transaction->bus_id = Input::get('vehicle');
-            $daily_transaction->transaction_date = strtotime(Input::get('transaction_date'));
+            $daily_transaction->transaction_date = $this->_date;
             $daily_transaction->driver_id = Input::get('driver_id');
             $daily_transaction->total_amount_collected = Input::get('total_amount_collected');
             $daily_transaction->total_trips = Input::get('total_trips');
@@ -65,6 +71,7 @@ class AccountController extends Controller
             //return the transaction id to be used in other tables
 
             $transaction_id =$daily_transaction->id;
+
 
             //prepare an array to store all expenses
             $all_expenses = array();
@@ -107,9 +114,26 @@ class AccountController extends Controller
             $daily_bank_accumulation->actual_banked = Input::get('actual_banked');
             $daily_bank_accumulation->save();
 //            echo $b = $daily_bank_accumulation->id;
+
+            //record journal
+
+            $journal = new Journal();
+            $journal->bus_id = Input::get('vehicle');
+            $journal->amount = Input::get('actual_banked');
+            $journal->dr_cr = "CR";
+            $journal->particulars = 'Income for '.Input::get('transaction_date');
+            $journal->daily_transaction_id = $transaction_id;
+            $journal->status = true;
+            $journal->save();
         })){
         }
         Session::flash('success','The Transaction has been Created');
+        return redirect('accounts');
+    }
+    public function deleteTransaction($id){
+        $id = DailyTransaction::find($id);
+        $id->delete();
+        Session::flash('success','The transaction has been deleted');
         return redirect('accounts');
     }
 }

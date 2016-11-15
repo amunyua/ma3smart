@@ -19,7 +19,7 @@
     <table class="table table-striped table-bordered table-hover" width="100%">
         <thead>
         <tr>
-            <th colspan="5" style="text-align: center;">Date: {{ (!empty($daily_reports[0]->transaction_date))? date('D M, Y',strtotime($daily_reports[0]->transaction_date)): '','<br>' }}</th>
+            <th colspan="5" style="text-align: center;">Date: {{ (count($daily_reports) && !empty($daily_reports[0]->transaction_date))? date('D M, Y',$daily_reports[0]->transaction_date): '','<br>' }}</th>
         </tr>
         <tr>
             <th>ID</th>

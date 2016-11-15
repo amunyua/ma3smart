@@ -19,7 +19,8 @@ class CreateInvoiceTransactionDetailsTable extends Migration
             $table->foreign('invoice_transaction_id')
                 ->references('id')
                 ->on('invoice_transactions')
-                ->onUpdate('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->integer('item_id')->unsigned()->index();
             $table->foreign('item_id')
                 ->references('id')

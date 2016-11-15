@@ -20,6 +20,7 @@
             <th>Trips</th>
             <th>Total Coll</th>
             <th>View Report</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -30,11 +31,12 @@
                 ?>
                 <tr>
                     <td>{{ $daily_tran->id }}</td>
-                    <td>{{ date('D M Y',strtotime($daily_tran->transaction_date)) }}</td>
+                    <td>{{ date('d M Y',$daily_tran->transaction_date) }}</td>
                     <td>{{ $driver->surname.' '.$driver->firstname.' '.$driver->middlename }}</td>
                     <td>{{ $daily_tran->total_trips }}</td>
                     <td>{{ $daily_tran->total_amount_collected }}</td>
-                    <td><a href="{{ url('view-report/'.$daily_tran->id) }}" class="btn btn-small btn-success">View report</a></td>
+                    <td><a href="{{ url('view-report/'.$daily_tran->id) }}" class="btn btn-xs btn-success">View report</a></td>
+                    <td><a action="{{ url('delete-transaction/'.$daily_tran->id) }}" data-toggle="modal" data-target="#delete-transaction" class="btn btn-xs btn-danger delete-btn">Delete </a></td>
                 </tr>
                 @endforeach
             @endif
@@ -125,26 +127,6 @@
                             </section>
                             <section>
                                 <div class="row">
-                                    <label class="label col col-2"><strong>Total collected</strong></label>
-                                    <div class="col col-10">
-                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="total_amount_collected" value="{{ old('total_amount_collected') }}" autocomplete="off">
-                                        </label>
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="row">
-                                    <label class="label col col-2"><strong>Actual Banked</strong></label>
-                                    <div class="col col-10">
-                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="actual_banked" value="{{ old('actual_banked') }}" autocomplete="off">
-                                        </label>
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="row">
                                     <label class="label col col-2"><strong>Trips</strong></label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
@@ -153,6 +135,18 @@
                                     </div>
                                 </div>
                             </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2"><strong>Total collected</strong></label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="total_amount_collected" value="{{ old('total_amount_collected') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
 
                             @if(count($expenses))
                                 @foreach($expenses as $expense)
@@ -170,7 +164,16 @@
                                     @endforeach
                                 @endif
 
-
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2"><strong>Actual Banked</strong></label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="actual_banked" value="{{ old('actual_banked') }}" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
 
 
                         </fieldset>
@@ -196,7 +199,7 @@
 
     {{--modal for delete--}}
 
-    <div class="modal fade" id="delete-user-role" role="dialog">
+    <div class="modal fade" id="delete-transaction" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -204,18 +207,18 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Delete User Role
+                        Delete transaction
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
+                    <form id="delete-transaction-form" class="smart-form"  method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
                                 <div class="row">
                                     <p class="p col col-10">
-                                        Are you sure you want to delete this role?
+                                        Are you sure you want to delete this Transaction?
                                     </p>
                                 </div>
                             </section>
@@ -244,5 +247,5 @@
 @endsection
 
 @push('js')
-<script src="{{ URL::asset('custom_js/user_manager/user_roles.js') }}"></script>
+<script src="{{ URL::asset('my_js/accounts/accounts.js') }}"></script>
 @endpush

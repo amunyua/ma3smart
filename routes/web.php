@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'DashboardController@index');
+Route::get('/logout','DashboardController@index');
 
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
@@ -69,6 +70,7 @@ Route::post('/add-expense','ExpensesController@storeExpense');
 ####Accounts
 Route::get('/accounts','AccountController@getAccounts');
 Route::post('/store-transaction','AccountController@storeTransaction');
+Route::delete('/delete-transaction/{id}','AccountController@deleteTransaction');
 
 ###masterfile
 Route::get('/masterfiles','MasterfileController@index');
@@ -76,19 +78,20 @@ Route::get('/masterfiles','MasterfileController@index');
 
 ####Transactions
 
-
 ####reports
 Route::get('daily-report','ReportsController@getDailyReport');
 Route::get('/view-report/{id}','ReportsController@viewDailyReport');
 Route::get('/all-transactions','ReportsController@viewAllTransactionsReport');
 Route::get('/supplier-report/{id}','ReportsController@getSupplierReport');
 Route::post('/filter_report','ReportsController@getFilteredData');
+Route::get('account-status','ReportsController@accountStatus');
 
 ####  Masterfiles
 Route::get('/new-mf', 'MasterfileController@index');
 Route::post('/store-masterfile','MasterfileController@storeMasterfile');
 Route::get('/all-masterfiles','MasterfileController@getAllMasterfiles');
 Route::get('/load-masterfiles','MasterfileController@loadMasterFiles');
+Route::delete('/delete-masterfile/{id}','MasterfileController@deleteMasterfile');
 
 #### Suppliers
 Route::get('/suppliers','SupplierController@getSuppliers');
@@ -98,6 +101,10 @@ Route::post('/store-supplier-item','SupplierController@storeSupplierItem');
 Route::get('/invoices','SupplierController@getInvoices');
 Route::get('/load-invoice-fields/{id}','SupplierController@loadInvoiceFields');
 Route::post('/raise-invoice','SupplierController@createInvoice');
-Route::post('/delete-supplier/{id}','SupplierController@destroySupplier');
+Route::delete('/delete-supplier/{id}','SupplierController@destroySupplier');
+Route::delete('/delete-sup-e/{id}','SupplierController@deleteSuppE');
+Route::delete('/delete-invoice/{id}','SupplierController@deleteInvoice');
+Route::get('/load-inv-details/{id}','SupplierController@loadInvoiceBillDetails');
+Route::post('pay-bill/{id}','SupplierController@payBill');
 
 #### reports

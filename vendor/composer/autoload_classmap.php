@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddConsta' => $baseDir . '/database/migrations/2016_11_12_055430_add_consta.php',
     'AddFaIconsTable' => $baseDir . '/database/migrations/2016_10_12_085709_add_fa_icons_table.php',
     'AddFaiconColumn' => $baseDir . '/database/migrations/2016_11_5_093918_add_faicon_column.php',
     'AddFkToUserstable' => $baseDir . '/database/migrations/2016_11_06_075012_add_fk_to_userstable.php',
@@ -17,9 +18,11 @@ return array(
     'BusesAddOwnerColumnToBussesTale' => $baseDir . '/database/migrations/2016_11_08_050349_buses__add_owner_column_to_busses_tale.php',
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'CreateAllMasterfileView' => $baseDir . '/database/migrations/2016_11_07_122709_create_all_masterfile_view.php',
+    'CreateBankAccountsTable' => $baseDir . '/database/migrations/2016_11_12_102416_create_bank_accounts_table.php',
     'CreateBusesTable' => $baseDir . '/database/migrations/2016_11_02_183215_create_buses_table.php',
     'CreateContactsTable' => $baseDir . '/database/migrations/2016_11_5_114536_create_contacts_table.php',
     'CreateCustomerAccountsTable' => $baseDir . '/database/migrations/2016_11_07_082115_create_customer_accounts_table.php',
+    'CreateCustomerBillsTable' => $baseDir . '/database/migrations/2016_11_14_131005_create_customer_bills_table.php',
     'CreateDailyBankAccumulationsTable' => $baseDir . '/database/migrations/2016_11_03_212509_create_daily_bank_accumulations_table.php',
     'CreateDailyExpensesTable' => $baseDir . '/database/migrations/2016_11_03_212422_create_daily_expenses_table.php',
     'CreateDailyReportView' => $baseDir . '/database/migrations/2016_11_09_123008_create_daily_report_view.php',
@@ -27,6 +30,7 @@ return array(
     'CreateExpensesTable' => $baseDir . '/database/migrations/2016_11_02_191731_create_expenses_table.php',
     'CreateInvoiceTransactionDetailsTable' => $baseDir . '/database/migrations/2016_11_08_145027_create_invoice_transaction_details_table.php',
     'CreateInvoiceTransactionsTable' => $baseDir . '/database/migrations/2016_11_08_144349_create_invoice_transactions_table.php',
+    'CreateJournalsTable' => $baseDir . '/database/migrations/2016_11_15_084734_create_journals_table.php',
     'CreateMasterfileTable' => $baseDir . '/database/migrations/2016_11_01_092857_create_masterfile_table.php',
     'CreateMenusTable' => $baseDir . '/database/migrations/2016_10_17_220838_create_menus_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
@@ -116,6 +120,7 @@ return array(
     'Hamcrest\\Type\\IsString' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+    'InvoiceTransactionsAddInvoiceAmount' => $baseDir . '/database/migrations/2016_11_14_184412_invoice_transactions___add_invoice_amount.php',
     'Maatwebsite\\Excel\\Classes\\Cache' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/Cache.php',
     'Maatwebsite\\Excel\\Classes\\FormatIdentifier' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/FormatIdentifier.php',
     'Maatwebsite\\Excel\\Classes\\LaravelExcelWorksheet' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/LaravelExcelWorksheet.php',

@@ -166,4 +166,14 @@ class MasterfileController extends Controller
         $masterfiles = DB::table('all_masterfiles')->get();
         return Datatables::of($masterfiles)->make(true);
     }
+
+    public function deleteMasterfile($id){
+        $id = Masterfile::find($id);
+        if($id->delete()) {
+            Session::flash('success' . 'The masterfile has been deleted');
+            return redirect('all-masterfiles');
+        }else{
+            Session::flash('warning','Cannot delete this masterfile for it is being referenced somewhere else');
+        }
+    }
 }

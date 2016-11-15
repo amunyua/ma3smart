@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::transaction(function (){
+            DB::table('users')->delete();
             $admin_mf = Masterfile::where('surname', 'Admin')->first();
             $role = Role::where('role_code','SYS_ADMIN')->first();
             DB::table('users')->delete();

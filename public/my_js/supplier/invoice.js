@@ -23,4 +23,38 @@ $('#supplier').on('change',function () {
         });
     }
 
+});
+
+$('.delete-invoice').on('click',function () {
+    var action = $(this).attr('action');
+    $('#delete-invoice-form').attr('action',action);
+});
+
+$('#paybill_btn').on('click',function () {
+   var invoice_id = $(this).attr('invoice-id');
+    var action = $(this).attr('action');
+    $('#pay-bill-form').attr('action',action);
+    $.ajax({
+        url: 'load-inv-details/'+invoice_id,
+        dataType: 'json',
+        success: function (data) {
+            $('#initial-amount').val(data['bill_amount']);
+            $('#bill-balance  ').val(data['bill_balance']);
+        }
+    })
+});
+
+$('#submit-btn').on('click',function (e) {
+    e.preventDefault();
+    var paid_amount = $('#amount-paid').val();
+    if(paid_amount != ''){
+        var amount_payable = $('#bill-balance').val();
+        if( (amount_payable<paid_amount)){
+            alert('The amount payable may not be greater than the bill balance');
+        }else{
+            $('#pay-bill-form').submit();
+        }
+    }else{
+        alert('please enter amount to pay');
+    }
 })
