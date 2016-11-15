@@ -85,7 +85,7 @@
                         <td>{{ $journal->id }}</td>
                         <td>{{ $journal->bus_id }}</td>
                         <td>{{ $journal->id }}</td>
-                        <td><?php echo (!empty($journal->bill_id))? $journal->bill_id:$journal->daily_transaction_id ?></td>
+                        <td><?php echo (!empty($journal->bill_id))? $journal->bill_id : '<a class="btn btn-xs btn-success" href="'.url('/view-report/'.$journal->daily_transaction_id).'">View details</a>' ?></td>
                         <td>{{ $journal->particulars }}</td>
                         <td>{{ ($journal->dr_cr == 'DB')? '-'.$journal->amount : '' }}</td>
                         <td>{{ ($journal->dr_cr == 'CR')? $journal->amount : '' }}</td>
@@ -97,7 +97,8 @@
                     <th>{{  number_format($total_credit,2) }}</th>
                 </tr>
                 <tr>
-
+                    <th colspan="6" style="text-align: right">Runnig Ballance</th>
+                    <th>{{ number_format(($total_credit - $total_debit),2) }}</th>
                 </tr>
             @endif
         </tbody>

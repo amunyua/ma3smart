@@ -144,6 +144,14 @@ class MenuSeeder extends Seeder
             $report->parent_menu = $report_id;
             $report->sequence = 3;
             $report->save();
+            //account status
+            $report_route = Route::where('route_name', 'Account Status')->first();
+            $report = new Menu();
+            $report->route_id = $report_route->id;
+            $report->parent_menu = $report_id;
+            $report->sequence = 4;
+            $report->save();
+
 
 
 //            #### system

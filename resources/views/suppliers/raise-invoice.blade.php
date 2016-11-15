@@ -42,7 +42,7 @@
                         <td>{{ $transaction->transaction_date }}</td>
                         <td>{{ (!empty($invoice_amount->bill_amount))? number_format($invoice_amount->bill_amount,2):'' }}</td>
                         <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-xs btn-success">View </a>'?></td>
-                        <td><a href="#paybill" action="{{ url('pay-bill/'.$transaction->id) }}" class="btn btn-warning btn-xs" invoice-id="{{ $transaction->id }}" id="paybill_btn" data-toggle="modal">Make payment</a> </td>
+                        <td><a href="#paybill" action="{{ url('pay-bill/'.$transaction->id) }}" class="btn btn-warning btn-xs paybill_btn" invoice-id="{{ $transaction->id }}" id="" data-toggle="modal">Make payment</a> </td>
                         <td><a href="#delete-invoice-modal" action="{{ url('delete-invoice/'.$transaction->id) }}" data-toggle="modal" class="btn btn-danger btn-xs delete-invoice">Delete</a> </td>
                     </tr>
                     @endforeach

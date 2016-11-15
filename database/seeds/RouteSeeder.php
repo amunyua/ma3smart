@@ -136,6 +136,13 @@ class RouteSeeder extends Seeder
             $report->parent_route = $report_menu_id;
             $report->save();
 
+            //account status report
+            $report = new Route();
+            $report->route_name = 'Account Status';
+            $report->url = 'account-status';
+            $report->parent_route = $report_menu_id;
+            $report->save();
+
 
             #### system
             $system = new Route();

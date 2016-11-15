@@ -30,8 +30,9 @@ $('.delete-invoice').on('click',function () {
     $('#delete-invoice-form').attr('action',action);
 });
 
-$('#paybill_btn').on('click',function () {
+$('.paybill_btn').on('click',function () {
    var invoice_id = $(this).attr('invoice-id');
+    // alert(invoice_id);
     var action = $(this).attr('action');
     $('#pay-bill-form').attr('action',action);
     $.ajax({
@@ -47,9 +48,11 @@ $('#paybill_btn').on('click',function () {
 $('#submit-btn').on('click',function (e) {
     e.preventDefault();
     var paid_amount = $('#amount-paid').val();
+    // alert(paid_amount);
     if(paid_amount != ''){
         var amount_payable = $('#bill-balance').val();
-        if( (amount_payable<paid_amount)){
+        // alert(amount_payable);
+        if((amount_payable<paid_amount)){
             alert('The amount payable may not be greater than the bill balance');
         }else{
             $('#pay-bill-form').submit();
