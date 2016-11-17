@@ -159,24 +159,33 @@ class SupplierController extends Controller
     }
 
     public function destroySupplier($id){
-        $supplier = Supplier::find($id);
-        $supplier->delete();
-        Session::flash('success','The supplier has been deleted');
-        return redirect('suppliers');
+        try {
+            Supplier::destroy($id);
+            Session::flash('success','The supplier has been deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('failed','The supplier entity cannot be deleted because it\'s being used somewhere else, try making inactive');
+        }
+        return redirect()->back();
     }
 
     public function deleteSuppE($id){
-        $del_id = SupplierEntity::find($id);
-        $del_id->delete();
-        Session::flash('success','Supplier item deleted');
-        return redirect('supplier-items');
+        try {
+            SupplierEntity::destroy($id);
+            Session::flash('success','Supplier item has been deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('failed','The supplier item cannot be deleted because it\'s being used somewhere else, try making inactive');
+        }
+        return redirect()->back();
     }
 
     public function deleteInvoice($id){
-        $del_id = InvoiceTransactions::find($id);
-        $del_id->delete();
-        Session::flash('success','The invoice has been deleted');
-        return redirect('invoices');
+        try {
+            InvoiceTransactions::destroy($id);
+            Session::flash('success','The invoice has been deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('failed','The invoice cannot be deleted because it\'s being used somewhere else, try making inactive');
+        }
+        return redirect()->back();
     }
 
     public function loadInvoiceBillDetails($id){
@@ -205,8 +214,9 @@ class SupplierController extends Controller
             $journal->bus_id = $customer_bill->bus_id;
             $journal->amount = Input::get('amount_paid');
             $journal->dr_cr = 'DB';
+            $journal->journal_date = Input::get('invoice_date');
             $journal->bill_id = $customer_bill->id;
-            $journal->particulars = 'Paid invoice number '.$this->_id;
+            $journal->particulars = 'Payment for invoice number '.$this->_id;
             $journal->status = true;
             $journal->save();
 
@@ -217,5 +227,46 @@ class SupplierController extends Controller
 
         return redirect('invoices');
     }
+
+    public function getEditSuppD($id){
+        $supplier = Supplier::find($id);
+        return Response::json($supplier);
+    }
+
+    public function editSupplier(Request $request, $id){
+//        var_dump($_POST);
+        $this->validate($request , array());
+        $supplier = Supplier::find($id);
+        $supplier->supplier_name = $request->supplier_name;
+        $supplier->role = $request->role;
+        $supplier->code = $request->code;
+        $supplier->registration_number = $request->registration_number;
+        $supplier->phone_number = $request->phone_number;
+        $supplier->city = $request->city;
+        $supplier->physical_location = $request->physical_location;
+        $supplier->status = $request->status;
+        $supplier->save();
+
+        Session::flash('success','The supplier has been edited');
+        return redirect('suppliers');
+    }
+
+    public function getSEDetails($id){
+        $details = SupplierEntity::find($id);
+        return Response::json($details);
+    }
+
+    public function editSupplierItem(Request $request ,$id){
+//        var_dump($_POST);
+        $sp = SupplierEntity::find($id);
+        $sp->item_name = $request->item_name;
+        $sp->item_code = strtoupper($request->item_code);
+        $sp->amount = $request->amount;
+        $sp->status = $request->status;
+        $sp->save();
+        Session::flash('success',"Supplier Item has been edited");
+        return redirect('supplier-items');
+    }
+
 }
 

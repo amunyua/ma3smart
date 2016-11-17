@@ -12,8 +12,8 @@
 */
 
 Route::get('/', 'DashboardController@index');
-Route::get('/logout','DashboardController@index');
-
+//Route::get('/logout','DashboardController@index');
+Route::post('/logout','LoginController@logout');
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
 
@@ -62,10 +62,17 @@ Route::get('/ajax_trails','UserManagerController@ajaxAuditTrails');
 
 Route::get('all-buses','BusesController@getBuses');
 Route::post('/add-bus','BusesController@storeBus');
+Route::get('/load-bus-details/{id}','BusesController@loadBusEditD');
+Route::post('/edit-bus/{id}','BusesController@editBus');
+Route::delete('/delete-bus/{id}','BusesController@deleteBus');
 
 ####Expenses
 Route::get('/expenses','ExpensesController@getExpenses');
 Route::post('/add-expense','ExpensesController@storeExpense');
+Route::get('/load-expense-edit-details/{id}','ExpensesController@loadExpenseEditDetails');
+Route::post('/edit-expense/{id}','ExpensesController@editExpense');
+Route::delete('/delete-expense/{id}','ExpensesController@deleteExpense');
+
 
 ####Accounts
 Route::get('/accounts','AccountController@getAccounts');
@@ -106,5 +113,9 @@ Route::delete('/delete-sup-e/{id}','SupplierController@deleteSuppE');
 Route::delete('/delete-invoice/{id}','SupplierController@deleteInvoice');
 Route::get('/load-inv-details/{id}','SupplierController@loadInvoiceBillDetails');
 Route::post('pay-bill/{id}','SupplierController@payBill');
+Route::get('/load-supplier-edit-d/{id}','SupplierController@getEditSuppD');
+Route::post('/edit-supplier/{id}','SupplierController@editSupplier');
+Route::get('/get-supplier-d-ailm/{id}','SupplierController@getSEDetails');
+Route::post('/edit-sup-e/{id}','SupplierController@editSupplierItem');
 
 #### reports

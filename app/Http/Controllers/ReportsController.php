@@ -55,8 +55,8 @@ class ReportsController extends Controller
     public function getFilteredData(Request $request){
         if(isset($request->date_range)){
             $data = explode('-',$request->date_range);
-            echo $date1 = strtotime($data[0]);
-            echo  $date2 = strtotime($data[1]);
+            $date1 = strtotime($data[0]);
+            $date2 = strtotime($data[1]);
 
 //            die;
 //            $date_f = explode('/',$date1);

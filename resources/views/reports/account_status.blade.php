@@ -65,7 +65,7 @@
             <th>ID</th>
             <th>Vehicle</th>
             <th>Date</th>
-            <th>Details</th>
+            {{--<th>Details</th>--}}
             <th>Description</th>
             <th>Debit</th>
             <th>Credit</th>
@@ -76,28 +76,32 @@
             @if(count($journals))
                 <?php $total_credit = 0; $total_debit =0; ?>
                 @foreach($journals as $journal)
-                    <?php if ($journal->dr_cr == 'DB'){
-                        $total_debit = $total_debit + $journal->amount;
-                    }elseif ($journal->dr_cr == 'CR'){
-                        $total_credit = $total_credit + $journal->amount;
-                    } ?>
+                    <?php
+                        $vehicle = \App\Bus::find($journal->bus_id);
+//                            print_r($vehicle);
+                        if ($journal->dr_cr == 'DB'){
+                            $total_debit = $total_debit + $journal->amount;
+                        }elseif ($journal->dr_cr == 'CR'){
+                            $total_credit = $total_credit + $journal->amount;
+                        }
+                    ?>
                     <tr>
                         <td>{{ $journal->id }}</td>
-                        <td>{{ $journal->bus_id }}</td>
-                        <td>{{ $journal->id }}</td>
-                        <td><?php echo (!empty($journal->bill_id))? $journal->bill_id : '<a class="btn btn-xs btn-success" href="'.url('/view-report/'.$journal->daily_transaction_id).'">View details</a>' ?></td>
+                        <td>{{ (!empty($vehicle->number_plate))? $vehicle->number_plate: '' }}</td>
+                        <td>{{ $journal->journal_date }}</td>
+                        {{--<td>{{(!empty($journal->bill_id))? $journal->bill_id : '<a class="btn btn-xs btn-success" href="'.url('/view-report/'.$journal->daily_transaction_id).'">View details</a>' }}</td>--}}
                         <td>{{ $journal->particulars }}</td>
                         <td>{{ ($journal->dr_cr == 'DB')? '-'.$journal->amount : '' }}</td>
                         <td>{{ ($journal->dr_cr == 'CR')? $journal->amount : '' }}</td>
                     </tr>
                     @endforeach
                 <tr>
-                    <th colspan="5" style="text-align: right">Totals</th>
+                    <th colspan="4" style="text-align: right">Totals</th>
                     <th><?php echo '- '.number_format($total_debit,2) ?></th>
                     <th>{{  number_format($total_credit,2) }}</th>
                 </tr>
                 <tr>
-                    <th colspan="6" style="text-align: right">Runnig Ballance</th>
+                    <th colspan="5" style="text-align: right">Runnig Ballance</th>
                     <th>{{ number_format(($total_credit - $total_debit),2) }}</th>
                 </tr>
             @endif

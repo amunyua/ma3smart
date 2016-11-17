@@ -4,7 +4,7 @@
 @section('widget-desc', 'Daily Expenses')
 
 @section('button')
-    <button type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-user-role">
+    <button type="button" class="btn btn-primary pull-right header-btn hidden-mobile" data-toggle="modal" data-target="#add-expense">
         <i class="fa fa-plus"></i> Add Expense
     </button>
 @endsection
@@ -20,6 +20,7 @@
             <th>Amount</th>
             <th>Amount Type</th>
             <th>Status</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
@@ -32,9 +33,10 @@
                     <td>{{ $expense->code }}</td>
                     <td>{{ $expense->amount }}</td>
                     <td>{{ $expense->amount_type }}</td>
-                    <td><?php echo ($expense->status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Blocked</span>' ?></td>
+                    <td><?php echo ($expense->status == 1)? '<span class="label label-success"> Active </span>':'<span class="label label-danger">Inactive</span>' ?></td>
 
-                    <td> <a href="#delete-user-role" class="btn btn-danger btn-xs del_role" data-toggle="modal" del-id="{{ $expense->id }}">Delete </a> </td>
+                    <td> <a href="#edit-expense-modal" class="btn btn-warning btn-xs edit-expense-btn" action="{{ url('/edit-expense/'.$expense->id) }}" data-toggle="modal" edit-id="{{ $expense->id }}">Edit </a> </td>
+                    <td> <a href="#delete-expense" class="btn btn-danger btn-xs delete-expense-btn"  action="{{ url('/delete-expense/'.$expense->id) }}" data-toggle="modal" del-id="{{ $expense->id }}">Delete </a> </td>
                 </tr>
             @endforeach
         @endif
@@ -43,7 +45,7 @@
 @endsection
 
 @section('modals')
-    <div class="modal fade" id="add-user-role" role="dialog" >
+    <div class="modal fade" id="add-expense" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,10 +143,8 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-
-    {{--modal for delete--}}
-
-    <div class="modal fade" id="delete-user-role" role="dialog">
+{{--modal for edit--}}
+    <div class="modal fade" id="edit-expense-modal" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -152,12 +152,112 @@
                         &times;
                     </button>
                     <h4 class="modal-title">
-                        Delete User Role
+                        Edit Expense Entry
                     </h4>
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="delete-role" class="smart-form" action="{{ url('delete-user-role') }}" method="post">
+                    <form id="edit-expense-form" class="smart-form" method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Expense</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" required id="expense_name" name="expense_name" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Expense Code</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="text" id="code" required name="code" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Amount</label>
+                                    <div class="col col-10">
+                                        <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
+                                            <input type="number" required name="amount" id="amount" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Amount Type</label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="amount_type" id="amount_type" required class="form-control">
+                                                <option value="Fixed">Fixed</option>
+                                                <option value="Custom">Custom</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Status</label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="status" id="status" required class="form-control">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                        </fieldset>
+
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <i class="fa fa-remove"></i> Cancel
+                            </button>
+
+                        </footer>
+                    </form>
+
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    {{--modal for delete--}}
+
+    <div class="modal fade" id="delete-expense" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Delete Expense Entry
+                    </h4>
+                </div>
+                <div class="modal-body no-padding">
+
+                    <form id="delete-expense-form" class="smart-form" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
@@ -192,5 +292,5 @@
 @endsection
 
 @push('js')
-<script src="{{ URL::asset('custom_js/user_manager/user_roles.js') }}"></script>
+<script src="{{ URL::asset('my_js/configurations/expenses.js') }}"></script>
 @endpush

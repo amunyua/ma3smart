@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
+use App\Exceptions\Handler;
 
 class MasterfileController extends Controller
 {
@@ -167,13 +168,24 @@ class MasterfileController extends Controller
         return Datatables::of($masterfiles)->make(true);
     }
 
+//    public function deleteMasterfile($id){
+//        $id = Masterfile::find($id);
+//        if($id->delete()) {
+//            Session::flash('success' . 'The masterfile has been deleted');
+//            return redirect('all-masterfiles');
+//        }else{
+//            Session::flash('warning','Cannot delete this masterfile for it is being referenced somewhere else');
+//        }
+//    }
+
     public function deleteMasterfile($id){
-        $id = Masterfile::find($id);
-        if($id->delete()) {
-            Session::flash('success' . 'The masterfile has been deleted');
-            return redirect('all-masterfiles');
-        }else{
-            Session::flash('warning','Cannot delete this masterfile for it is being referenced somewhere else');
+        try {
+            Masterfile::destroy($id);
+            Session::flash('success','The masterfile has been deleted');
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('failed','The masterfile cannot be deleted because it\'s being used somewhere else');
         }
+        return redirect()->back();
+
     }
 }

@@ -120,6 +120,7 @@ class AccountController extends Controller
             $journal = new Journal();
             $journal->bus_id = Input::get('vehicle');
             $journal->amount = Input::get('actual_banked');
+            $journal->journal_date = Input::get('transaction_date');
             $journal->dr_cr = "CR";
             $journal->particulars = 'Income for '.Input::get('transaction_date');
             $journal->daily_transaction_id = $transaction_id;

@@ -49,12 +49,12 @@
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $supplier->code }}</td>
                         <td>{{ $supplier->role }}</td>
-                        <td>{{ $supplier->status }}</td>
+                        <td>{{ ($supplier->status == '1')? 'Active': 'Inactive' }}</td>
                         <td>{{ '0'.$supplier->phone_number }}</td>
                         <td>{{ $supplier->city }}</td>
                         <td>{{ $supplier->physical_location }}</td>
-                        <td><a href="#edit-supplier" edit-id ="{{ $supplier->id }}" id="edit-supplier-btn" action="{{ url('store-supplier') }}" data-toggle="modal" class="btn btn-warning btn-xs">Edit</a></td>
-                        <td><a href="#delete-supplier" action="{{ url('delete-supplier/'.$supplier->id) }}" id="delete-supplier-btn" data-toggle="modal" class="btn btn-danger btn-xs">Delete</a></td>
+                        <td><a href="#edit-supplier" edit-id ="{{ $supplier->id }}" id="edit-supplier-btn" action="{{ url('edit-supplier/'.$supplier->id) }}" data-toggle="modal" class="btn btn-warning btn-xs edit-supplier-btn">Edit</a></td>
+                        <td><a href="#delete-supplier" action="{{ url('delete-supplier/'.$supplier->id) }}" id="" data-toggle="modal" class="btn btn-danger btn-xs delete-supplier-btn">Delete</a></td>
                     </tr>
                     @endforeach
                 @endif
@@ -195,7 +195,7 @@
                 </div>
                 <div class="modal-body no-padding">
 
-                    <form id="add-menu-form" class="smart-form"  method="post">
+                    <form id="edit-supplier-form" class="smart-form"  method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <section>
@@ -203,7 +203,7 @@
                                     <label class="label col col-2">Supplier Name</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" required name="supplier_name" autocomplete="off">
+                                            <input type="text" id="supplier-name" required name="supplier_name" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -227,7 +227,7 @@
                                     <label class="label col col-2">Code</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" required name="code" autocomplete="off">
+                                            <input type="text" id="supp-code" required name="code" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -238,7 +238,7 @@
                                     <label class="label col col-2">Registration Number</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text"  name="registration_number" autocomplete="off">
+                                            <input type="text" id="registration_number"  name="registration_number" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -249,7 +249,7 @@
                                     <label class="label col col-2">Phone Number</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="number" required name="phone_number" autocomplete="off">
+                                            <input type="number" required name="phone_number" id="phone_number" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -259,7 +259,7 @@
                                     <label class="label col col-2">City</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" required name="city" autocomplete="off">
+                                            <input type="text" required name="city" id="city" autocomplete="off">
                                         </label>
                                     </div>
                                 </div>
@@ -270,7 +270,20 @@
                                     <label class="label col col-2">Physical Location</label>
                                     <div class="col col-10">
                                         <label class="input"> <i class="icon-append fa fa-keyboard-o"></i>
-                                            <input type="text" required name="physical_location" autocomplete="off">
+                                            <input type="text" required name="physical_location" id="physical_location" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-2">Status</label>
+                                    <div class="col col-10">
+                                        <label class="input">
+                                            <select name="status" class="form-control" id="supp-status">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
                                         </label>
                                     </div>
                                 </div>

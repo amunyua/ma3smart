@@ -9,9 +9,9 @@
 @endif
 @if (Session::has('warning'))
     <br>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-warning" role="alert">
         <button class="close" data-dismiss="alert"> × </button>
-        <i class="fa fa-fw fa-check"></i><strong>Success </strong> {{ Session::get('warning') }}
+        <i class="fa fa-fw fa-check"></i><strong>Warning! </strong> {{ Session::get('warning') }}
     </div>
     <br>
 
@@ -29,3 +29,13 @@
     </div>
     <br>
     @endif
+
+@if (Session::has('failed'))
+    <br>
+    <div class="alert alert-danger" role="alert">
+        <button class="close" data-dismiss="alert"> × </button>
+        <i class="fa fa-fw fa-remove">  </i><strong>Failed! </strong> {{ Session::get('failed') }}
+    </div>
+    <br>
+
+@endif
