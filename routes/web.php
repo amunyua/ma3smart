@@ -13,7 +13,7 @@
 
 Route::get('/', 'DashboardController@index');
 //Route::get('/logout','DashboardController@index');
-Route::post('/logout','LoginController@logout');
+
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index');
 

@@ -59,7 +59,7 @@ class MenuSeeder extends Seeder
             $supplier_route = Route::where('route_name','Suppliers')->first();
             $supplier = new Menu();
             $supplier->route_id = $supplier_route->id;
-            $supplier->sequence = 3;
+            $supplier->sequence = 4;
             $supplier->save();
             $supplier_r = $supplier->id;
 
@@ -92,7 +92,7 @@ class MenuSeeder extends Seeder
             $configurations_route = Route::where('route_name', 'System Configurations')->first();
             $conf = new Menu();
             $conf->route_id = $configurations_route->id;
-            $conf->sequence = 4;
+            $conf->sequence = 3;
             $conf->save();
             $configurations_id = $conf->id;
 

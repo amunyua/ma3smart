@@ -23,6 +23,7 @@
             <th>Registration Number</th>
             <th>Invoice Date</th>
             <th>Invoice Amount</th>
+            <th>Balance</th>
             <th>View Details</th>
             <th>Make Payment</th>
             <th>Delete Invoice</th>
@@ -41,6 +42,7 @@
                         <td>{{ (!empty($vehicle->number_plate))? $vehicle->number_plate: '' }}</td>
                         <td>{{ $transaction->transaction_date }}</td>
                         <td>{{ (!empty($invoice_amount->bill_amount))? number_format($invoice_amount->bill_amount,2):'' }}</td>
+                        <td>{{ (!empty($invoice_amount->bill_balance))? number_format($invoice_amount->bill_balance,2):'0' }}</td>
                         <td><?php echo '<a href="'.url('supplier-report/'.$transaction->id). '" class="btn btn-xs btn-success">View </a>'?></td>
                         <td><a href="#paybill" action="{{ url('pay-bill/'.$transaction->id) }}" class="btn btn-warning btn-xs paybill_btn" invoice-id="{{ $transaction->id }}" id="" data-toggle="modal">Make payment</a> </td>
                         <td><a href="#delete-invoice-modal" action="{{ url('delete-invoice/'.$transaction->id) }}" data-toggle="modal" class="btn btn-danger btn-xs delete-invoice">Delete</a> </td>

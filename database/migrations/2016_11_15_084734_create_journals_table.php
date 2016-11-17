@@ -18,10 +18,11 @@ class CreateJournalsTable extends Migration
             $table->integer('bus_id')->nullable();
             $table->float('amount');
             $table->string('dr_cr');
+            $table->dateTime('journal_date')->nullable();
             $table->integer('bill_id')->unsigned()->index()->nullable();
             $table->foreign('bill_id')
-                ->references('customer_bills')
-                ->on('id')
+                ->references('id')
+                ->on('customer_bills')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('particulars')->nullable();

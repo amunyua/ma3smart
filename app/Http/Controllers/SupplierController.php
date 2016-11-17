@@ -55,7 +55,7 @@ class SupplierController extends Controller
     }
 
     public function getSupplierItems(){
-        $supplier_items = SupplierEntity::all();
+            $supplier_items = SupplierEntity::all();
         $suppliers = Supplier::where('status',true)->get();
         return view('suppliers.supplier-entities',array(
             'suppliers'=>$suppliers,
