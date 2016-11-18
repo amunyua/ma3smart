@@ -176,7 +176,7 @@ class MenuController extends Controller
 
                 echo '<li class="'.$li_class.' '.$lip_active.'">';
 
-                echo '<a href="'.$url.'" title="'.$route->route_name.'">';
+                echo '<a href="'.url($url).'" title="'.$route->route_name.'">';
                 echo (!empty($menu->fa_icon)) ? '<i class="fa fa-lg fa-fw '.$menu->fa_icon.' txt-color-blue"></i> ' : '';
                 echo '<span class="menu-item-parent">';
                 echo $route->route_name.'</span></a>';
