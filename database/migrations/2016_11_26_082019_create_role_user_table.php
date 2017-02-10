@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBankAccountsTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class CreateBankAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_accounts', function (Blueprint $table) {
+        Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bus_id')->unsigned()->index();
-            $table->foreign('bus_id')
+            $table->integer('role_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('role_id')
                 ->references('id')
-                ->on('buses')
+                ->on('roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->float('opening_balance');
-            $table->float('running_balance');
-            $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -34,6 +37,6 @@ class CreateBankAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_accounts');
+        Schema::dropIfExists('role_user');
     }
 }

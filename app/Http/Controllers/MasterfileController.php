@@ -28,25 +28,12 @@ class MasterfileController extends Controller
     }
 
     public function index(){
-        $user_role = Role::where('role_code','SYS_ADMIN')->first();
-        $role_id =$user_role->id;
-        if($this->user()->user_role != $role_id) {
-            $roles = Role::where([
-                ['role_code', '<>', 'SYS_ADMIN'],
-                ['role_code', '<>', 'SACCO']
-            ])->get();
-        }else{
-            $roles = Role::where('role_code', '<>', 'SYS_ADMIN')->get();
-        }
-        $main_ctype = 1;
-        $counties =1;
+
 //        $streams = Stream::where('stream_status', 1)->get();
+        $dependants = Masterfile::where('depends_on', 0)->get();
 
         return view('registration.index', array(
-            'roles' => $roles,
-            'main_ctype' => $main_ctype,
-            'counties' => $counties,
-//            'streams' => $streams
+            'dependants' => $dependants
         ));
     }
 
@@ -54,27 +41,38 @@ class MasterfileController extends Controller
 //        var_dump($_POST);die;
         $rules = array(
             'role' => 'required',
-            'id_no' => 'required|max:8|unique:masterfiles,id_no',
+//            'id_no' => 'required|max:8|unique:masterfiles,id_no',
             'firstname' => 'required',
             'surname' => 'required',
             'gender' => 'required',
-            'phone_number'=>'required',
-            'email'=>'required|unique:contacts,email'
+//            'phone_number'=>'required',
+//            'email'=>'required|unique:contacts,email'
 //            'regdate' => 'required'
         );
         $this->validate($request, $rules);
 
         DB::transaction(function(){
-            $role = Role::where('role_code', Input::get('role'))->first();
+//            $role = Role::where('role_code', Input::get('role'))->first();
 
             // create registration
+            if(!empty(Input::get('depends_on'))){
+                $depends_on = Input::get('depends_on');
+            }else{
+                $depends_on = 0;
+            }
+            if(Input::get('role') != 'Staff'){
+                $b_role = Input::get('role');
+            }else{
+                $b_role = Input::get('business_role');
+            }
                 $reg = new Masterfile();
                 $reg->surname = Input::get('surname');
                 $reg->firstname = Input::get('firstname');
                 $reg->middlename = Input::get('middlename');
                 $reg->id_no = Input::get('id_no');
                 $reg->user_role = Input::get('role');
-                $reg->b_role = Input::get('role');
+                $reg->b_role = $b_role;
+                $reg->depends_on = $depends_on;
                 $reg->save();
                 $reg_id = $reg->id;
 
@@ -183,9 +181,9 @@ class MasterfileController extends Controller
             Masterfile::destroy($id);
             Session::flash('success','The masterfile has been deleted');
         } catch (\Illuminate\Database\QueryException $e) {
-            Session::flash('failed','The masterfile cannot be deleted because it\'s being used somewhere else');
+            $message = $this->handleException($e);
+            Session::flash('failed', $message);
+            return redirect()->back();
         }
-        return redirect()->back();
-
     }
 }

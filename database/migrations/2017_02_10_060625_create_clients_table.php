@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoiceTransactionsTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateInvoiceTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_transactions', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vehicle_id')->index()->unsigned();
-            $table->foreign('vehicle_id')
+            $table->string('full_name');
+            $table->string('phone_number');
+            $table->integer('created_by')->unsigned()->index();
+            $table->foreign('created_by')
                 ->references('id')
-                ->on('buses')
+                ->on('masterfiles')
                 ->onUpdate('cascade');
-            $table->date('transaction_date');
-            $table->integer('supplier_id')->unsigned()->index();
-            $table->foreign('supplier_id')
+            $table->integer('client_group')->unsigned()->index();
+            $table->foreign('client_group')
                 ->references('id')
-                ->on('suppliers')
+                ->on('client_groups')
                 ->onUpdate('cascade');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -37,6 +39,6 @@ class CreateInvoiceTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_transactions');
+        Schema::dropIfExists('clients');
     }
 }

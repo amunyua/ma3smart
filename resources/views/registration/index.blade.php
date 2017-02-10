@@ -1,11 +1,11 @@
 @extends('layouts.wizard')
-@section('title', 'Create Staff')
-@section('widget-title', 'MasterFile Registration Form')
-@section('widget-desc', 'Allows one to register a driver, ma3 owner e.t.c...')
+@section('title', 'Register Client')
+@section('widget-title', 'Register Client')
+@section('widget-desc', '')
 @section('breadcrumb')
     <li><a href="{{ url('/') }}">Home</a></li>
     <li>MasterFile</li>
-        <li>Create MasterFile</li>
+        <li>New Client</li>
 @endsection
 
 @push('js')
@@ -29,7 +29,7 @@
         -->
         <header>
             <span class="widget-icon"> <i class="fa fa-check"></i> </span>
-            <h2> Create new Masterfile </h2>
+            <h2> Register New Client </h2>
 
         </header>
 

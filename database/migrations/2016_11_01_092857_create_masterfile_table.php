@@ -22,6 +22,7 @@ class CreateMasterfileTable extends Migration
             $table->string('user_role')->nullable();
             $table->string('id_no');
             $table->date('registration_date')->nullable();
+            $table->integer('depends_on')->index()->nullable();
             $table->string('b_role', 50)->nullable();
             $table->timestamps();
         });

@@ -57,21 +57,21 @@
 
 <header id="header">
 
-    <div id="logo-group">
-        <span id="logo"> <img src="{{ URL::asset('img/logo.png') }}" alt="boda"> </span>
-    </div>
+    {{--<div id="logo-group">--}}
+        {{--<span id="logo"> <img src="{{ URL::asset('img/logo.png') }}" alt="boda"> </span>--}}
+    {{--</div>--}}
 
     {{--<span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a href="register.html" class="btn btn-danger">Create account</a> </span>--}}
 
 </header>
 
-<div id="main" role="main">
+<div id="main" role="main" >
 
     <!-- MAIN CONTENT -->
     <div id="content" class="container">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-4 hidden-xs hidden-sm">
                 <h1 class="txt-color-red login-header-big">@yield('system_name')</h1>
                 @yield('content')
             </div>

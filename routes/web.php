@@ -21,7 +21,10 @@ Route::get('/dashboard', 'DashboardController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-
+#### Access Denied
+Route::get('/access-denied', function(){
+    return view('pages.access_denied');
+});
 // System Manager
 Route::get('/routes', 'RoutesController@index');
 Route::post('/add-route', 'RoutesController@store');
@@ -30,15 +33,13 @@ Route::get('/parent-routes', 'RoutesController@getParentRoutes');
 Route::post('/edit-route', 'RoutesController@update');
 Route::get('/load-routes', 'RoutesController@loadRoutes');
 Route::get('/delete-route/{id}', 'RoutesController@destroy');
+
 Route::get('/menu', 'MenuController@index');
 Route::post('/add-menu', 'MenuController@store');
 Route::post('/arrange-menu', 'MenuController@arrangeMenu');
 Route::post('/edit-menu', 'MenuController@update');
 Route::get('/get-menu/{id}', 'MenuController@getMenuItem');
 Route::post('/remove-menu', 'MenuController@destroy');
-Route::get('/theme-config', 'ThemeController@index');
-Route::get('/theme-select/{theme}', 'ThemeController@saveSkin');
-Route::get('/get-theme', 'ThemeController@getTheme');
 
 #### inventory module
 // category
@@ -52,10 +53,21 @@ Route::get('/make-backup','DatabaseBackup@runBackup');
 
 ##### User manager
 Route::get('/user_roles','UserManagerController@getIndex');
+Route::get('/all_users','UserManagerController@getAllUsers');
+Route::post('/sys-config', 'UserManagerController@updateSystemConfig');
+Route::get('/load-config', 'UserManagerController@loadSystemConfig');
 Route::post('/add-user-role','UserManagerController@storeRole');
-Route::delete('/delete-user-role/{id}','UserManagerController@destroyRole');
+Route::get('get-role-edit-details/{id}','UserManagerController@getRoleEditDetails');
+Route::post('edit-user-role/{id}','UserManagerController@updateUserRoleDetails');
+Route::get('/delete-user/{id}','UserManagerController@destroyRole');
 Route::get('/audit_trails','UserManagerController@auditTrails');
 Route::get('/ajax_trails','UserManagerController@ajaxAuditTrails');
+Route::get('/load-routes-allocation', 'UserManagerController@loadRoutesForAllocation');
+Route::post('/attach-route', 'UserManagerController@attachRoute');
+Route::post('/detach-route', 'UserManagerController@detachRoute');
+Route::get('/check-allocated-route/{id}', 'UserManagerController@isRouteAllocated');
+Route::post('all_users/block-user','UserManagerController@blockUser');
+Route::post('all_users/unblock-user','UserManagerController@unblockUser');
 
 
 ####buses
@@ -117,5 +129,11 @@ Route::get('/load-supplier-edit-d/{id}','SupplierController@getEditSuppD');
 Route::post('/edit-supplier/{id}','SupplierController@editSupplier');
 Route::get('/get-supplier-d-ailm/{id}','SupplierController@getSEDetails');
 Route::post('/edit-sup-e/{id}','SupplierController@editSupplierItem');
+
+//bookings routes
+Route::get('/create-booking','BookingsController@index');
+Route::post('/store-booking','BookingsController@createBooking');
+Route::get('/all-bookings','BookingsController@allBookings');
+Route::get('/view-booking/{id}','BookingsController@viewBookingDetails');
 
 #### reports

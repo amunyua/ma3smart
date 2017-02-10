@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MySQL - psv@localhost [3]" uuid="402cf762-9993-4654-8364-977cad32a5d2">
+    <data-source source="LOCAL" name="bulk_sms@localhost" uuid="fae668f0-c20d-4632-bfb2-f5a8927f2519">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/psv</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/bulk_sms</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

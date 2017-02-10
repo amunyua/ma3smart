@@ -1,6 +1,6 @@
 @extends('layouts.login')
-@section('title', 'Ma3Smart|login')
-@section('system_name', 'Ma3Smart')
+@section('title', 'Natural Tours & Safaris')
+{{--@section('system_name', 'Ma3Smart')--}}
 
 @section('content')
     <div class="hero">
@@ -12,7 +12,7 @@
             {{--</div>--}}
         {{--</div>--}}
 
-        <img src="{{ URL::asset('img/demo/isuzu.png') }}" class="pull-right display-image" alt="" style="width:350px; height: 200px; margin-top: 50px;">
+        {{--<img src="{{ URL::asset('img/demo/isuzu.png') }}" class="pull-right display-image" alt="" style="width:350px; height: 200px; margin-top: 50px;">--}}
     </div>
 
     <div class="row">
@@ -33,11 +33,14 @@
 
 @section('login-form')
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+        <br><br>
         <div class="well no-padding">
             <form action="{{ url('/login') }}" id="login-form" class="smart-form client-form" method="post">
                 {{ csrf_field() }}
+
                 <header>
-                    Sign In
+                    <h3 style="text-align: center">Natural Tours & Safaris</h3>
+                    <h4  style="text-align: center">Sign In</h4>
                 </header>
 
                 <fieldset>

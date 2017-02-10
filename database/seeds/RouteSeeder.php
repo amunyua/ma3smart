@@ -146,7 +146,7 @@ class RouteSeeder extends Seeder
 
             #### system
             $system = new Route();
-            $system->route_name = 'System Management';
+            $system->route_name = 'System';
             $system->save();
             $system_id = $system->id;
 
@@ -154,6 +154,13 @@ class RouteSeeder extends Seeder
             $routes = new Route();
             $routes->route_name = 'System Routes';
             $routes->url = 'routes';
+            $routes->parent_route = $system_id;
+            $routes->save();
+            $routes->roles()->attach($admin);
+
+            $routes = new Route();
+            $routes->route_name = 'Load System Routes';
+            $routes->url = 'load-routes';
             $routes->parent_route = $system_id;
             $routes->save();
             $routes->roles()->attach($admin);
@@ -166,18 +173,69 @@ class RouteSeeder extends Seeder
             $menu->roles()->attach($admin);
 
             $system_config = new Route();
-            $system_config->route_name = 'System Config';
-            $system_config->url = 'system_config';
+            $system_config->route_name = 'System Configuration';
+            $system_config->url = 'sys-config';
             $system_config->parent_route = $system_id;
             $system_config->save();
             $system_config->roles()->attach($admin);
 
+            $system_config = new Route();
+            $system_config->route_name = 'System Settings';
+            $system_config->url = 'load-config';
+            $system_config->parent_route = $system_id;
+            $system_config->save();
+            $system_config->roles()->attach($admin);
+
+            $system_config = new Route();
+            $system_config->route_name = 'Get Route Data';
+            $system_config->url = 'get-route/{route_id}';
+            $system_config->parent_route = $system_id;
+            $system_config->save();
+            $system_config->roles()->attach($admin);
+
+            $system_config = new Route();
+            $system_config->route_name = 'Update Route';
+            $system_config->url = 'edit-route';
+            $system_config->parent_route = $system_id;
+            $system_config->save();
+            $system_config->roles()->attach($admin);
+
+            $system_config = new Route();
+            $system_config->route_name = 'Load System Configuration';
+            $system_config->url = 'load-config';
+            $system_config->parent_route = $system_id;
+            $system_config->save();
+            $system_config->roles()->attach($admin);
+
+            $theme_config = new Route();
+            $theme_config->route_name = 'Theme Configuration';
+            $theme_config->url = 'theme_config';
+            $theme_config->parent_route = $system_id;
+            $theme_config->save();
+            $theme_config->roles()->attach($admin);
+
+            $theme_config = new Route();
+            $theme_config->route_name = 'Theme Select';
+            $theme_config->url = 'theme-select/{theme}';
+            $theme_config->parent_route = $system_id;
+            $theme_config->save();
+            $theme_config->roles()->attach($admin);
+
+            $get_theme = new Route();
+            $get_theme->route_name = 'Get Theme';
+            $get_theme->url = 'get-theme';
+            $get_theme->parent_route = $system_id;
+            $get_theme->save();
+            $get_theme->roles()->attach($admin);
+
             $backup = new Route();
-            $backup->route_name = 'Database Backup';
-            $backup->url = 'backups';
+            $backup->route_name = 'Backup';
+            $backup->url = 'backup';
             $backup->parent_route = $system_id;
             $backup->save();
             $backup->roles()->attach($admin);
+
+
 
             #### user management
             $user_mngt = new Route();
@@ -188,7 +246,7 @@ class RouteSeeder extends Seeder
             #### user management children
             $all_user = new Route();
             $all_user->route_name = 'All Users';
-            $all_user->url = 'routes';
+            $all_user->url = 'all_users';
             $all_user->parent_route = $user_mngt_id;
             $all_user->save();
             $all_user->roles()->attach($admin);
@@ -200,12 +258,62 @@ class RouteSeeder extends Seeder
             $roles->save();
             $roles->roles()->attach($admin);
 
+            $role = new Route();
+            $role->route_name = 'Delete User';
+            $role->url = 'delete-user/{id}';
+            $role->parent_route = $user_mngt_id;
+            $role->save();
+            $role->roles()->attach($admin);
+
+            $role = new Route();
+            $role->route_name = 'Block User';
+            $role->url = 'all_users/block-user';
+            $role->parent_route = $user_mngt_id;
+            $role->save();
+            $role->roles()->attach($admin);
+
+            $role = new Route();
+            $role->route_name = 'Unblock User';
+            $role->url = 'all_users/unblock-user';
+            $role->parent_route = $user_mngt_id;
+            $role->save();
+            $role->roles()->attach($admin);
+
+
             $audit_trail = new Route();
             $audit_trail->route_name = 'Audit Trail';
-            $audit_trail->url = 'audit_trail';
+            $audit_trail->url = 'audit_trails';
             $audit_trail->parent_route = $user_mngt_id;
             $audit_trail->save();
             $audit_trail->roles()->attach($admin);
+
+            $route = new Route();
+            $route->route_name = 'Load Routes Allocation';
+            $route->url = 'load-routes-allocation';
+            $route->parent_route = $system_id;
+            $route->save();
+            $route->roles()->attach($admin);
+
+            $route = new Route();
+            $route->route_name = 'is Route Allocated';
+            $route->url = 'check-allocated-route/{id}';
+            $route->parent_route = $system_id;
+            $route->save();
+            $route->roles()->attach($admin);
+
+            $route = new Route();
+            $route->route_name= 'Attach Route';
+            $route->url = 'attach-route';
+            $route->parent_route = $system_id;
+            $route->save();
+            $route->roles()->attach($admin);
+
+            $route = new Route();
+            $route->route_name= 'Detach Route';
+            $route->url = 'detach-route';
+            $route->parent_route = $system_id;
+            $route->save();
+            $route->roles()->attach($admin);
 
         });
     }

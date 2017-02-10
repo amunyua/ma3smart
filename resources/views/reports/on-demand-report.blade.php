@@ -59,7 +59,7 @@
         </div>
 
     </div>
-    <table class="table table-striped table-bordered table-hover" width="100%">
+    <table class="table table-striped table-bordered table-hover " width="100%">
         <thead>
         <tr>
             <th>ID</th>
@@ -159,5 +159,6 @@
             @endif
         </tbody>
     </table>
+    <button class="btn btn-block btn-success di" onclick="window.print();">Print</button>
 @endsection
 

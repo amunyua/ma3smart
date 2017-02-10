@@ -9,26 +9,29 @@
                 <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
                 <select name="role" class="form-control" id="role">
                     <option value="">Choose Role</option>
-                    <option value="Driver">Driver</option>
-                    <option value="Conductor">Conductor</option>
-                    <option value="Ma3 owner">Ma3 owner</option>
-                    {{--@if(count($roles))--}}
-                        {{--@foreach($roles as $role)--}}
-                            {{--<option value="{{ $role->id }}" {{ (old('role') == $role->id) ? 'selected': '' }}>{{ $role->role_name }}</option>--}}
-                            {{--@endforeach--}}
-                        {{--@endif--}}
+                    <option value="Client">Client</option>
+                    <option value="Dependant">Dependant</option>
+                    <option value="Staff">Staff</option>
                 </select>
             </div>
         </div>
     </div>
 
     <div class="col-sm-6 person">
-        <div class="form-group">
+        <div class="form-group" style="display: none" id="dependant">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
-                <input class="form-control" placeholder="ID Number" autocomplete="off" type="number" name="id_no" id="adm_no" value="{{ old('id_no') }}">
+                <select name="depends_on" class="form-control">
+                    <option value="">Choose client</option>
+                    @if (count($dependants))
+                        @foreach($dependants as $dependant)
+                            <option value="{{ $dependant->id }}">{{ $dependant->surname.' '.$dependant->firstname.' '.$dependant->middlename }}</option>
+                            @endforeach
+                        @endif
+                </select>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -75,7 +78,7 @@
     </div>
 
 </div>
-<div class="row " >
+<div class="row" >
     <div class="col-sm-6">
         <div class="form-group">
             <div class="input-group">
@@ -84,5 +87,28 @@
             </div>
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
+                <input class="form-control" placeholder="ID/Passport Number" autocomplete="off" type="number" name="id_no" id="adm_no" value="{{ old('id_no') }}">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" >
+
+    <div class="col-sm-6">
+        <div class="form-group" id="b_role" style="display: none">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
+                <select name="business_role" class="form-control" id="role">
+                    <option value="">Choose Business Role</option>
+                    <option value="driver">Driver</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
 </div>
 
